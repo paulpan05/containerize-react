@@ -1,6 +1,6 @@
 import { makeStyles, createStyles } from "@material-ui/core/styles";
 
-const authPageStyles = makeStyles(
+const loginPageStyles = makeStyles(
   createStyles({
     pageGrid: {
       minHeight: '100vh',
@@ -25,4 +25,23 @@ const authPageStyles = makeStyles(
   })
 );
 
-export { authPageStyles };
+const signupPageStyles = makeStyles(
+  createStyles({
+    pageGrid: {
+      minHeight: '100vh',
+      verticalAlign: 'middle'
+    },
+    innerGrid: {
+      width: '600px',
+      maxWidth: '80vw'
+    },
+    createUserGrid: {
+      marginTop: '0.25em'
+    }
+  })
+);
+
+export const componentStyles = {
+  loginPageStyles,
+  signupPageStyles
+};

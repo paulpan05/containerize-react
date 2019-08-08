@@ -1,10 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
+import Amplify from 'aws-amplify';
 import './css/index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { amplifyConfig } from './constants'
 
-ReactDOM.render(<App />, document.getElementById('root'));
+Amplify.configure(amplifyConfig.configInfo);
+
+ReactDOM.render(
+  <Router>
+    <App />
+  </Router>
+  ,
+  document.getElementById('root')
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
