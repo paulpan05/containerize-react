@@ -1,6 +1,6 @@
-import { userConstants } from '../constants';
+import { userConstants } from '../../constants/redux/user';
 import { Auth } from 'aws-amplify';
-import { ThunkActionCreator } from '../../types';
+import { ThunkActionCreatorPreset } from '../../types';
 
 const loginRequest = (user: any) => {
   return {
@@ -23,7 +23,7 @@ const loginFailure = (error: any) => {
   }
 }
 
-const login: ThunkActionCreator = (email: string, password: string) => {
+const login: ThunkActionCreatorPreset = (email: string, password: string) => {
   return (dispatch) => {
     dispatch(loginRequest({ email }));
     Auth.signIn(email, password)

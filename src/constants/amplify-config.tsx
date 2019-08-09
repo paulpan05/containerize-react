@@ -1,4 +1,4 @@
-const configInfo = {
+const amplifyConfig = {
   Auth: {
     identityPoolId: 'us-east-2:58e0d324-c5c9-4178-b1da-a1b9a8d35bac',
     region: 'us-east-2',
@@ -8,6 +8,4 @@ const configInfo = {
   }
 }
 
-export const amplifyConfig = {
-  configInfo
-};
+export default amplifyConfig;

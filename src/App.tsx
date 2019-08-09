@@ -1,12 +1,12 @@
 import React from 'react';
-import { componentFunctions } from './constants';
-import AuthRoutes from './components/AuthRoutes';
+import { unblockPage } from './constants/functions-component';
+import AuthRoutes from './routes/AuthRoutes';
 
 const App: React.FC = () => {
   React.useEffect(() => {
-    window.addEventListener('load', componentFunctions.unblockPage);
+    window.addEventListener('load', unblockPage);
     return () => {
-      window.removeEventListener('load', componentFunctions.unblockPage);
+      window.removeEventListener('load', unblockPage);
     }
   }, []);
   return (

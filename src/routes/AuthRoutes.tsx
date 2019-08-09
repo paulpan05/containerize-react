@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter, Switch, Route } from 'react-router-dom';
-import { LoginPage, SignupPage } from './';
+import LoginPage from '../components/LoginPage';
+import SignupPage from '../components/SignupPage';
 
 const AuthRoutes = withRouter((props) => {
   return (
@@ -11,4 +12,4 @@ const AuthRoutes = withRouter((props) => {
   );
 });
 
-export { AuthRoutes };
+export default AuthRoutes;

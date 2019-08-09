@@ -5,10 +5,10 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import MuiLink from '@material-ui/core/Link';
 import { Link } from 'react-router-dom';
-import { componentStyles } from '../constants';
+import { signupPageStyles } from '../constants/styles-component';
 
 const SignupPage: React.FC = () => {
-  const classes = componentStyles.signupPageStyles();
+  const classes = signupPageStyles();
   return (
     <Grid
       container
@@ -81,4 +81,4 @@ const SignupPage: React.FC = () => {
   );
 }
 
-export { SignupPage };
+export default SignupPage;

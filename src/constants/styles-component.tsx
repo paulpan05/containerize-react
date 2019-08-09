@@ -41,7 +41,4 @@ const signupPageStyles = makeStyles(
   })
 );
 
-export const componentStyles = {
-  loginPageStyles,
-  signupPageStyles
-};
+export { loginPageStyles, signupPageStyles };

@@ -1,6 +1,6 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import { componentStyles } from '../constants';
+import { loginPageStyles } from '../constants/styles-component';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import MuiLink from '@material-ui/core/Link';
@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import logo from '../img/logo.png';
 
 const LoginPage: React.FC = () => {
-  const classes = componentStyles.loginPageStyles();
+  const classes = loginPageStyles();
   return (
     <Grid
       container
@@ -89,4 +89,4 @@ const LoginPage: React.FC = () => {
   );
 }
 
-export { LoginPage };
+export default LoginPage;

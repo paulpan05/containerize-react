@@ -1,4 +1,5 @@
 import { ActionCreator, AnyAction } from 'redux';
-import { ThunkAction } from 'redux-thunk';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
-export type ThunkActionCreator = ActionCreator<ThunkAction<void, {}, {}, AnyAction>>;
+export type ThunkActionCreatorPreset = ActionCreator<ThunkAction<void, {}, {}, AnyAction>>;
+export type ThunkDispatchPreset = ThunkDispatch<{}, {}, AnyAction>;

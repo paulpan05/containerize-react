@@ -5,9 +5,9 @@ import Amplify from 'aws-amplify';
 import './css/index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { amplifyConfig } from './constants'
+import amplifyConfig from './constants/amplify-config';
 
-Amplify.configure(amplifyConfig.configInfo);
+Amplify.configure(amplifyConfig);
 
 ReactDOM.render(
   <Router>
