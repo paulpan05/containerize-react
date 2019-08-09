@@ -21,6 +21,11 @@ const loginPageStyles = makeStyles(
       width: '500px',
       maxWidth: '80vw',
       height: 'auto'
+    },
+    loadImg: {
+      width: '300px',
+      maxWidth: '80vw',
+      height: 'auto'
     }
   })
 );
