@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Amplify from 'aws-amplify';
 import './css/index.css';
-import App from './App';
+import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 import amplifyConfig from './constants/amplify-config';
 import rootStore from './redux/stores/root-store';

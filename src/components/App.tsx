@@ -1,6 +1,7 @@
 import React from 'react';
-import { unblockPage } from './constants/functions-component';
-import AuthRoutes from './routes/AuthRoutes';
+import { unblockPage } from '../constants/functions-component';
+import AuthRoutes from '../routes/AuthRoutes';
+import RootRoute from '../routes/RootRoute';
 
 const App: React.FC = () => {
   React.useEffect(() => {
@@ -10,7 +11,10 @@ const App: React.FC = () => {
     }
   }, []);
   return (
-    <AuthRoutes />
+    <React.Fragment>
+      <RootRoute />
+      <AuthRoutes />
+    </React.Fragment>
   );
 }
 

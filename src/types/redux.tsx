@@ -3,3 +3,12 @@ import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 
 export type ThunkActionCreatorPreset = ActionCreator<ThunkAction<void, {}, {}, AnyAction>>;
 export type ThunkDispatchPreset = ThunkDispatch<{}, {}, AnyAction>;
+export interface RootState {
+  auth: AuthState
+}
+export interface AuthState {
+  loggingIn: boolean
+  loggedIn: boolean
+  loginFailed: boolean
+  loginNewPassword: boolean
+}
