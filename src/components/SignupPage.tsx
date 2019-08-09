@@ -18,8 +18,8 @@ const SignupPage: React.FC = () => {
       className={classes.pageGrid}
     >
       <Grid item>
-        <Typography align='center' variant='h3' gutterBottom>
-          Create your account
+        <Typography align='center' variant='h4' gutterBottom>
+          Create a new account
         </Typography>
       </Grid>
       <Grid
@@ -71,7 +71,7 @@ const SignupPage: React.FC = () => {
             </Button>
           </Grid>
           <Grid item>
-            <MuiLink component={ Link } to='/forgot-password' variant='body1'>
+            <MuiLink component={ Link } to='/login' variant='body1'>
               Back to log in
           </MuiLink>
           </Grid>

@@ -32,10 +32,10 @@ const LoginPage: React.FC = () => {
         className={classes.innerGrid}
       >
         <TextField
-          label='Email'
-          type='email'
-          name='email'
-          autoComplete='email'
+          label='Email or username'
+          type='text'
+          name='session[username_or_email]'
+          autoComplete='on'
           margin='normal'
           variant='outlined'
           fullWidth
