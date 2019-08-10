@@ -1,6 +1,6 @@
-import { makeStyles, createStyles } from "@material-ui/core/styles";
+import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 
-const loginPageStyles = makeStyles(
+const loginPageStyles = makeStyles((theme: Theme) =>
   createStyles({
     pageGrid: {
       minHeight: '100vh',
@@ -22,10 +22,12 @@ const loginPageStyles = makeStyles(
       maxWidth: '80vw',
       height: 'auto'
     },
-    loadImg: {
-      width: '300px',
-      maxWidth: '80vw',
-      height: 'auto'
+    loadProgress: {
+      margin: theme.spacing(3)
+    },
+    snackbarMargin: {
+      margin: theme.spacing(1),
+      width: '100%'
     }
   })
 );
@@ -42,8 +44,27 @@ const signupPageStyles = makeStyles(
     },
     createUserGrid: {
       marginTop: '0.25em'
+    },
+    headerText: {
+      marginTop: '1.5em'
     }
   })
 );
 
-export { loginPageStyles, signupPageStyles };
+const alertSnackbarStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    icon: {
+      fontSize: 20
+    },
+    iconVariant: {
+      opacity: 0.9,
+      marginRight: theme.spacing(1)
+    },
+    message: {
+      display: 'flex',
+      alignItems: 'center'
+    },
+  })
+);
+
+export { loginPageStyles, signupPageStyles, alertSnackbarStyles };

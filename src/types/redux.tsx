@@ -10,5 +10,7 @@ export interface AuthState {
   loggingIn: boolean
   loggedIn: boolean
   loginFailed: boolean
+  loginFailedReason: string
   loginNewPassword: boolean
+  user: any
 }

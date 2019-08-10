@@ -17,8 +17,12 @@ const SignupPage: React.FC = () => {
       alignItems='center'
       className={classes.pageGrid}
     >
-      <Grid item>
-        <Typography align='center' variant='h4' gutterBottom>
+      <Grid item className={classes.headerText}>
+        <Typography
+          align='center'
+          variant='h4'
+          gutterBottom
+        >
           Create a new account
         </Typography>
       </Grid>

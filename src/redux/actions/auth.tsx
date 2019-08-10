@@ -1,11 +1,12 @@
 import { authConstants } from '../../constants/redux/auth';
 import { Auth } from 'aws-amplify';
 import { ThunkActionCreatorPreset } from '../../types/redux';
+import { CognitoUser } from '@aws-amplify/auth';
+import { CognitoUserSession } from 'amazon-cognito-identity-js';
 
-const loginRequest = (user: any) => {
+const loginRequest = () => {
   return {
-    type: authConstants.LOGIN_REQUEST,
-    user
+    type: authConstants.LOGIN_REQUEST
   };
 }
 
@@ -30,11 +31,49 @@ const loginFailure = (reason: any) => {
   }
 }
 
+const loginFailureReset = () => {
+  return {
+    type: authConstants.LOGIN_FAILURE_RESET
+  }
+}
+
+const passwordResetRequest = () => {
+  return {
+    type: authConstants.PASSWORD_RESET_REQUEST
+  }
+}
+
+const passwordResetSuccess = (user: any) => {
+  return {
+    type: authConstants.PASSWORD_RESET_SUCCESS
+  }
+}
+
+const loginPasswordReset: ThunkActionCreatorPreset = (user: any, newPassword: any) => {
+  return async (dispatch) => {
+    try {
+      dispatch(passwordResetRequest());
+      console.log(user.challengeParam);
+      const loggedUser =
+        await Auth.completeNewPassword(
+          user,
+          newPassword,
+          []
+        );
+      dispatch(passwordResetSuccess(loggedUser));
+      console.log(loggedUser);
+    } catch (error) {
+      console.log(error.code);
+    }
+  }
+}
+
 const login: ThunkActionCreatorPreset = (id: string, password: string) => {
   return async (dispatch) => {
     try {
-      dispatch(loginRequest({ id }));
+      dispatch(loginRequest());
       const user = await Auth.signIn(id, password);
+      console.log(user);
       if (user.challengeName === 'NEW_PASSWORD_REQUIRED') {
         dispatch(loginNewPassword(user));
       } else {
@@ -43,11 +82,13 @@ const login: ThunkActionCreatorPreset = (id: string, password: string) => {
     } catch (error) {
       if (error.code === 'UserNotConfirmedException') {
       } else if (error.code === 'PasswordResetRequiredException') {
-        dispatch(loginFailure('Please click "Forgot password?" to reset password'))
+        dispatch(loginFailure('Please click "Forgot password?" to reset password'));
       } else if (error.code === 'NotAuthorizedException') {
-        dispatch(loginFailure('Incorrect Password'))
+        dispatch(loginFailure('Unauthorized login'));
       } else if (error.code === 'UserNotFoundException') {
         dispatch(loginFailure('Username or email does not exist'));
+      } else if (error.code) {
+        dispatch(loginFailure(`Login failed with error ${error.code}`));
       } else {
         dispatch(loginFailure('Login failed: unknown error'));
       }
@@ -55,4 +96,4 @@ const login: ThunkActionCreatorPreset = (id: string, password: string) => {
   }
 }
 
-export { login };
+export { login, loginFailureReset, loginPasswordReset };
