@@ -110,6 +110,7 @@ const auth = (state = initialState, action: AnyAction) => {
     case authConstants.SIGNUP_REQUEST_COMPLETE:
       return {
         ...state,
+        signingUp: false,
         signupConfirm: true,
         signupConfirmMedium: action.deliveryMedium,
         signupConfirmUsername: action.username
@@ -155,7 +156,6 @@ const auth = (state = initialState, action: AnyAction) => {
       return {
         ...state,
         verifyingSignup: false,
-        signingUp: false,
         signedUp: true
       }
     
@@ -185,6 +185,7 @@ const auth = (state = initialState, action: AnyAction) => {
 
     case authConstants.RESET_SIGNED_UP:
       return {
+        ...state,
         signedUp: false
       }
 
