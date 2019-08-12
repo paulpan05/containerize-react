@@ -82,6 +82,72 @@ const signupRequestComplete = (username: string, deliveryMedium: string) => {
   }
 }
 
+const resendSignupRequest = () => {
+  return {
+    type: authConstants.RESEND_SIGNUP_REQUEST
+  }
+}
+
+const resendSignupSuccess = () => {
+  return {
+    type: authConstants.RESEND_SIGNUP_SUCCESS
+  }
+}
+
+const resendSignupFailure = () => {
+  return {
+    type: authConstants.RESEND_SIGNUP_FAILURE
+  }
+}
+
+const signupVerificationRequest = () => {
+  return {
+    type: authConstants.SIGNUP_VERIFICATION_REQUEST
+  }
+}
+
+const signupVerificationFailure = () => {
+  return {
+    type: authConstants.SIGNUP_VERIFICATION_FAILURE
+  }
+}
+
+const signupSuccess = () => {
+  return {
+    type: authConstants.SIGNUP_SUCCESS
+  }
+}
+
+const signupFailureReset = () => {
+  return {
+    type: authConstants.SIGNUP_FAILURE_RESET
+  }
+}
+
+const resendSignupFailureReset = () => {
+  return {
+    type: authConstants.RESEND_SIGNUP_FAILURE_RESET
+  }
+}
+
+const resendSignupSuccessReset = () => {
+  return {
+    type: authConstants.RESEND_SIGNUP_SUCCESS_RESET
+  }
+}
+
+const signupVerificationFailureReset = () => {
+  return {
+    type: authConstants.SIGNUP_VERIFICATION_FAILURE_RESET
+  }
+}
+
+const resetSignedUp = () => {
+  return {
+    type: authConstants.RESET_SIGNED_UP
+  }
+}
+
 const handleAuthChallenge = (user: any, dispatch: ThunkDispatchPreset) => {
   switch (user.challengeName) {
     case 'NEW_PASSWORD_REQUIRED':
@@ -122,7 +188,6 @@ const login: ThunkActionCreatorPreset = (id: string, password: string) => {
     try {
       dispatch(loginRequest());
       const user = await Auth.signIn(id, password);
-      console.log(user);
       if (user.challengeName) {
         handleAuthChallenge(user, dispatch);
       } else {
@@ -158,11 +223,15 @@ const signup: ThunkActionCreatorPreset = (username: string,
           email: email
         }
       });
-      let deliveryMedium = data.codeDeliveryDetails.DeliveryMedium;
-      if (deliveryMedium === 'EMAIL') {
-        deliveryMedium = 'Email';
+      if (data.userConfirmed) {
+        dispatch(signupSuccess());
+      } else {
+        let deliveryMedium = data.codeDeliveryDetails.DeliveryMedium;
+        if (deliveryMedium === 'EMAIL') {
+          deliveryMedium = 'Email';
+        }
+        dispatch(signupRequestComplete(username, deliveryMedium));
       }
-      dispatch(signupRequestComplete(username, deliveryMedium));
     } catch (error) {
       if (error.code === 'CodeDeliveryFailureException') {
         dispatch(signupFailure('Confirmation code failed to deliver. Please sign in with new account to redeliver'));
@@ -181,6 +250,30 @@ const signup: ThunkActionCreatorPreset = (username: string,
   }
 }
 
+const resendSignupVerification: ThunkActionCreatorPreset = (username: string) => {
+  return async (dispatch) => {
+    try {
+      dispatch(resendSignupRequest());
+      await Auth.resendSignUp(username);
+      dispatch(resendSignupSuccess());
+    } catch (error) {
+      dispatch(resendSignupFailure());
+    }
+  }
+}
+
+const signupVerification: ThunkActionCreatorPreset = (username: string, code: string) => {
+  return async (dispatch) => {
+    try {
+      dispatch(signupVerificationRequest());
+      await Auth.confirmSignUp(username, code);
+      dispatch(signupSuccess());
+    } catch (error) {
+      dispatch(signupVerificationFailure());
+    }
+  }
+}
+
 export {
   login,
   loginFailureReset,
@@ -188,5 +281,12 @@ export {
   passwordResetRequest,
   passwordResetFailureReset,
   backToLogin,
-  signup
+  signup,
+  resendSignupVerification,
+  signupVerification,
+  signupFailureReset,
+  resendSignupFailureReset,
+  resendSignupSuccessReset,
+  signupVerificationFailureReset,
+  resetSignedUp
 };

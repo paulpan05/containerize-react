@@ -16,7 +16,13 @@ const initialState: AuthState = {
   signupFailedReason: '',
   signupConfirm: false,
   signupConfirmMedium: '',
-  signupConfirmUsername: ''
+  signupConfirmUsername: '',
+  resendingSignup: false,
+  resendSuccess: false,
+  resendFailed: false,
+  verifyingSignup: false,
+  verifyFailed: false,
+  signedUp: false
 }
 
 const auth = (state = initialState, action: AnyAction) => {
@@ -107,6 +113,79 @@ const auth = (state = initialState, action: AnyAction) => {
         signupConfirm: true,
         signupConfirmMedium: action.deliveryMedium,
         signupConfirmUsername: action.username
+      }
+    
+    case authConstants.RESEND_SIGNUP_REQUEST:
+      return {
+        ...state,
+        resendingSignup: true,
+        resendSuccess: false,
+        resendFailed: false
+      }
+
+    case authConstants.RESEND_SIGNUP_SUCCESS:
+      return {
+        ...state,
+        resendingSignup: false,
+        resendSuccess: true
+      }
+    
+    case authConstants.RESEND_SIGNUP_FAILURE:
+      return {
+        ...state,
+        resendingSignup: false,
+        resendFailed: true
+      }
+
+    case authConstants.SIGNUP_VERIFICATION_REQUEST:
+      return {
+        ...state,
+        verifyingSignup: true,
+        verifyFailed: false
+      }
+
+    case authConstants.SIGNUP_VERIFICATION_FAILURE:
+      return {
+        ...state,
+        verifyingSignup: false,
+        verifyFailed: true
+      }
+
+    case authConstants.SIGNUP_SUCCESS:
+      return {
+        ...state,
+        verifyingSignup: false,
+        signingUp: false,
+        signedUp: true
+      }
+    
+    case authConstants.SIGNUP_FAILURE_RESET:
+      return {
+        ...state,
+        signupFailed: false
+      }
+    
+    case authConstants.RESEND_SIGNUP_FAILURE_RESET:
+      return {
+        ...state,
+        resendFailed: false
+      }
+    
+    case authConstants.RESEND_SIGNUP_SUCCESS_RESET:
+      return {
+        ...state,
+        resendSuccess: false
+      }
+    
+    case authConstants.SIGNUP_VERIFICATION_FAILURE_RESET:
+      return {
+        ...state,
+        verifyFailed: false
+      }
+
+    case authConstants.RESET_SIGNED_UP:
+      return {
+        signedUp: false
       }
 
     default:
