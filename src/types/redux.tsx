@@ -1,5 +1,6 @@
 import { ActionCreator, AnyAction } from 'redux';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { CognitoUser } from 'amazon-cognito-identity-js';
 
 export type ThunkActionCreatorPreset = ActionCreator<ThunkAction<void, {}, {}, AnyAction>>;
 export type ThunkDispatchPreset = ThunkDispatch<{}, {}, AnyAction>;
@@ -12,5 +13,13 @@ export interface AuthState {
   loginFailed: boolean
   loginFailedReason: string
   loginNewPassword: boolean
-  user: any
+  passwordResetFailed: boolean
+  passwordResetFailedReason: string
+  user?: CognitoUser,
+  signingUp: boolean,
+  signupFailed: boolean,
+  signupFailedReason: string,
+  signupConfirm: boolean,
+  signupConfirmMedium: string,
+  signupConfirmUsername: string
 }

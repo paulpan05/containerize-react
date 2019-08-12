@@ -3,6 +3,7 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import WarningIcon from '@material-ui/icons/Warning';
 import ErrorIcon from '@material-ui/icons/Error';
 import InfoIcon from '@material-ui/icons/Info';
+import { CognitoUser } from "amazon-cognito-identity-js";
 
 export interface LoginPageProps {
   dispatch: Dispatch<any>,
@@ -11,7 +12,9 @@ export interface LoginPageProps {
   loggedIn: boolean,
   loginFailed: boolean,
   loginFailedReason: string,
-  user: any
+  passwordResetFailed: boolean,
+  passwordResetFailedReason: string,
+  user?: CognitoUser
 }
 
 export const variantIcon = {

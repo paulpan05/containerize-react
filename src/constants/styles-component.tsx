@@ -45,8 +45,10 @@ const signupPageStyles = makeStyles(
     createUserGrid: {
       marginTop: '0.25em'
     },
-    headerText: {
-      marginTop: '1.5em'
+    logo: {
+      width: '500px',
+      maxWidth: '80vw',
+      height: 'auto'
     }
   })
 );
@@ -63,7 +65,7 @@ const alertSnackbarStyles = makeStyles((theme: Theme) =>
     message: {
       display: 'flex',
       alignItems: 'center'
-    },
+    }
   })
 );
 

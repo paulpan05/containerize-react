@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 import MuiLink from '@material-ui/core/Link';
 import { Link } from 'react-router-dom';
 import { signupPageStyles } from '../constants/styles-component';
+import logo from '../img/logo.png';
 
 const SignupPage: React.FC = () => {
   const classes = signupPageStyles();
@@ -17,10 +18,13 @@ const SignupPage: React.FC = () => {
       alignItems='center'
       className={classes.pageGrid}
     >
-      <Grid item className={classes.headerText}>
+      <Grid item>
+        <img src={logo} alt='logo' className={classes.logo} />
+      </Grid>
+      <Grid item>
         <Typography
           align='center'
-          variant='h4'
+          variant='h5'
           gutterBottom
         >
           Create a new account

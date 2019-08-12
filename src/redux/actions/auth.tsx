@@ -1,8 +1,7 @@
 import { authConstants } from '../../constants/redux/auth';
 import { Auth } from 'aws-amplify';
-import { ThunkActionCreatorPreset } from '../../types/redux';
-import { CognitoUser } from '@aws-amplify/auth';
-import { CognitoUserSession } from 'amazon-cognito-identity-js';
+import { ThunkActionCreatorPreset, ThunkDispatchPreset } from '../../types/redux';
+import { CognitoUser } from 'amazon-cognito-identity-js';
 
 const loginRequest = () => {
   return {
@@ -17,14 +16,14 @@ const loginNewPassword = (user: any) => {
   }
 }
 
-const loginSuccess = (user: any) => {
+const loginSuccess = (user: CognitoUser) => {
   return {
     type: authConstants.LOGIN_SUCCESS,
     user
   }
 }
 
-const loginFailure = (reason: any) => {
+const loginFailure = (reason: string) => {
   return {
     type: authConstants.LOGIN_FAILURE,
     reason
@@ -43,9 +42,51 @@ const passwordResetRequest = () => {
   }
 }
 
-const passwordResetSuccess = (user: any) => {
+const passwordResetFailure = (reason: string) => {
   return {
-    type: authConstants.PASSWORD_RESET_SUCCESS
+    type: authConstants.PASSWORD_RESET_FAILURE,
+    reason
+  }
+}
+
+const passwordResetFailureReset = () => {
+  return {
+    type: authConstants.PASSWORD_RESET_FAILURE_RESET
+  }
+}
+
+const backToLogin = () => {
+  return {
+    type: authConstants.BACK_TO_LOGIN
+  }
+}
+
+const signupRequest = () => {
+  return {
+    type: authConstants.SIGNUP_REQUEST
+  }
+}
+
+const signupFailure = (reason: string) => {
+  return {
+    type: authConstants.SIGNUP_FAILURE,
+    reason
+  }
+}
+
+const signupRequestComplete = (username: string, deliveryMedium: string) => {
+  return {
+    type: authConstants.SIGNUP_REQUEST_COMPLETE,
+    username,
+    deliveryMedium
+  }
+}
+
+const handleAuthChallenge = (user: any, dispatch: ThunkDispatchPreset) => {
+  switch (user.challengeName) {
+    case 'NEW_PASSWORD_REQUIRED':
+      dispatch(loginNewPassword(user));
+      break;
   }
 }
 
@@ -53,17 +94,25 @@ const loginPasswordReset: ThunkActionCreatorPreset = (user: any, newPassword: an
   return async (dispatch) => {
     try {
       dispatch(passwordResetRequest());
-      console.log(user.challengeParam);
       const loggedUser =
         await Auth.completeNewPassword(
           user,
           newPassword,
           []
         );
-      dispatch(passwordResetSuccess(loggedUser));
-      console.log(loggedUser);
+      if (loggedUser.challengeName) {
+        handleAuthChallenge(loggedUser, dispatch);
+      } else {
+        dispatch(loginSuccess(loggedUser as CognitoUser));
+      }
     } catch (error) {
-      console.log(error.code);
+      if (error.code === 'InvalidPasswordException') {
+        dispatch(passwordResetFailure('Invalid new password entered'))
+      } else if (error.code) {
+        dispatch(passwordResetFailure(`Password reset failed with error: ${error.code}`));
+      } else {
+        dispatch(passwordResetFailure('An unknown error occured. Please try again later'));
+      }
     }
   }
 }
@@ -74,26 +123,70 @@ const login: ThunkActionCreatorPreset = (id: string, password: string) => {
       dispatch(loginRequest());
       const user = await Auth.signIn(id, password);
       console.log(user);
-      if (user.challengeName === 'NEW_PASSWORD_REQUIRED') {
-        dispatch(loginNewPassword(user));
+      if (user.challengeName) {
+        handleAuthChallenge(user, dispatch);
       } else {
-        dispatch(loginSuccess(user));
+        dispatch(loginSuccess(user as CognitoUser));
       }
     } catch (error) {
       if (error.code === 'UserNotConfirmedException') {
       } else if (error.code === 'PasswordResetRequiredException') {
         dispatch(loginFailure('Please click "Forgot password?" to reset password'));
       } else if (error.code === 'NotAuthorizedException') {
-        dispatch(loginFailure('Unauthorized login'));
+        dispatch(loginFailure('Unauthorized login: wrong password or blocked by server'));
       } else if (error.code === 'UserNotFoundException') {
         dispatch(loginFailure('Username or email does not exist'));
       } else if (error.code) {
         dispatch(loginFailure(`Login failed with error ${error.code}`));
       } else {
-        dispatch(loginFailure('Login failed: unknown error'));
+        dispatch(loginFailure('An unknown error occurred. Please try again later'));
       }
     }
   }
 }
 
-export { login, loginFailureReset, loginPasswordReset };
+const signup: ThunkActionCreatorPreset = (username: string,
+  email: string,
+  password: string) => {
+  return async (dispatch) => {
+    try {
+      dispatch(signupRequest());
+      const data = await Auth.signUp({
+        username: username,
+        password: password,
+        attributes: {
+          email: email
+        }
+      });
+      let deliveryMedium = data.codeDeliveryDetails.DeliveryMedium;
+      if (deliveryMedium === 'EMAIL') {
+        deliveryMedium = 'Email';
+      }
+      dispatch(signupRequestComplete(username, deliveryMedium));
+    } catch (error) {
+      if (error.code === 'CodeDeliveryFailureException') {
+        dispatch(signupFailure('Confirmation code failed to deliver. Please sign in with new account to redeliver'));
+      } else if (error.code === 'InvalidPasswordException') {
+        dispatch(signupFailure('Invalid password for new account'));
+      } else if (error.code === 'NotAuthorizedException') {
+        dispatch(signupFailure('User is not authorized to sign up at the moment'));
+      } else if (error.code === 'UsernameExistsException') {
+        dispatch(signupFailure('Username already exists'));
+      } else if (error.code) {
+        dispatch(signupFailure(`Signup failed with error: ${error.code}`));
+      } else {
+        dispatch(signupFailure('An unknown error occurred. Please try again later'));
+      }
+    }
+  }
+}
+
+export {
+  login,
+  loginFailureReset,
+  loginPasswordReset,
+  passwordResetRequest,
+  passwordResetFailureReset,
+  backToLogin,
+  signup
+};

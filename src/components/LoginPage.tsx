@@ -9,7 +9,13 @@ import Typography from '@material-ui/core/Typography';
 import { Link, Redirect } from 'react-router-dom';
 import logo from '../img/logo.png';
 import { LoginPageProps } from '../types/components';
-import { login, loginFailureReset, loginPasswordReset } from '../redux/actions/auth';
+import {
+  login,
+  loginFailureReset,
+  loginPasswordReset,
+  passwordResetFailureReset,
+  backToLogin
+} from '../redux/actions/auth';
 import { RootState } from '../types/redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import AlertSnackbar from './AlertSnackbar';
@@ -21,6 +27,8 @@ const mapStateToProps = (state: RootState) => {
     loggedIn: state.auth.loggedIn,
     loginFailed: state.auth.loginFailed,
     loginFailedReason: state.auth.loginFailedReason,
+    passwordResetFailed: state.auth.passwordResetFailed,
+    passwordResetFailedReason: state.auth.passwordResetFailedReason,
     user: state.auth.user
   }
 }
@@ -45,13 +53,16 @@ const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
       alignItems='center'
       className={classes.pageGrid}
     >
+      <Grid item>
+        <img src={logo} alt='logo' className={classes.logo} />
+      </Grid>
       {props.loggedIn && (
         <Redirect to='/console' />
       )}
       {props.loggingIn && props.loginNewPassword && (
         <React.Fragment>
           <Grid item>
-            <Typography align='center' variant='h4' gutterBottom>
+            <Typography align='center' variant='h5' gutterBottom>
               Please enter new password before signing in.
             </Typography>
           </Grid>
@@ -60,6 +71,18 @@ const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
             item={true}
             className={classes.innerGrid}
           >
+            {props.passwordResetFailed && (
+              <AlertSnackbar
+                variant='error'
+                onClose={() => {
+                  props.dispatch(
+                    passwordResetFailureReset()
+                  );
+                }}
+                className={classes.snackbarMargin}
+                message={props.passwordResetFailedReason}
+              />
+            )}
             <TextField
               label='Password'
               type='password'
@@ -76,6 +99,38 @@ const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
               }}
               fullWidth
             />
+            <Grid
+              container
+              direction='row'
+              justify='center'
+              alignItems='center'
+              spacing={6}
+              className={classes.loginGrid}
+            >
+              <Grid item>
+                <Button
+                  variant='contained'
+                  color='primary'
+                  onClick={(event) => {
+                    event.preventDefault();
+                    props.dispatch(loginPasswordReset(props.user, password));
+                  }}
+                >
+                  Change Password
+                </Button>
+              </Grid>
+              <Grid item>
+                <MuiLink
+                  variant='body1'
+                  onClick={(event: React.MouseEvent) => {
+                    event.preventDefault();
+                    props.dispatch(backToLogin());
+                  }}
+                >
+                  Back to login
+                </MuiLink>
+              </Grid>
+            </Grid>
           </Grid>
         </React.Fragment>
       )}
@@ -93,9 +148,6 @@ const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
       )}
       {!props.loggingIn && !props.loggedIn && (
         <React.Fragment>
-          <Grid item>
-            <img src={logo} alt='logo' className={classes.logo} />
-          </Grid>
           <Grid item>
             <Typography align='center' variant='h6' gutterBottom>
               A flexible note taking app with custom integrations.
