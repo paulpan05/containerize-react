@@ -173,6 +173,56 @@ const resetRedirectToSignup = () => {
   }
 }
 
+const forgotPasswordRequest = () => {
+  return {
+    type: authConstants.FORGOT_PASSWORD_REQUEST
+  }
+}
+
+const forgotPasswordRequestFailure = (reason: string) => {
+  return {
+    type: authConstants.FORGOT_PASSWORD_REQUEST_FAILURE,
+    reason
+  }
+}
+
+const forgotPasswordRequestSuccess = () => {
+  return {
+    type: authConstants.FORGOT_PASSWORD_REQUEST_SUCCESS
+  }
+}
+
+const resetForgotPasswordRequestFailure = () => {
+  return {
+    type: authConstants.RESET_FORGOT_PASSWORD_REQUEST_FAILURE
+  }
+}
+
+const forgotPasswordSubmitRequest = () => {
+  return {
+    type: authConstants.FORGOT_PASSWORD_SUBMIT_REQUEST
+  }
+}
+
+const forgotPasswordSubmitRequestSuccess = () => {
+  return {
+    type: authConstants.FORGOT_PASSWORD_SUBMIT_REQUEST_SUCCESS
+  }
+}
+
+const forgotPasswordSubmitRequestFailure = (reason: string) => {
+  return {
+    type: authConstants.FORGOT_PASSWORD_SUBMIT_REQUEST_FAILURE,
+    reason
+  }
+}
+
+const resetForgotPasswordLoginRedirect = () => {
+  return {
+    type: authConstants.RESET_FORGOT_PASSWORD_LOGIN_REDIRECT
+  }
+}
+
 const handleAuthChallenge = (user: any, dispatch: ThunkDispatchPreset) => {
   switch (user.challengeName) {
     case 'NEW_PASSWORD_REQUIRED':
@@ -202,7 +252,7 @@ const loginPasswordReset: ThunkActionCreatorPreset = (user: any, newPassword: an
       } else if (error.code) {
         dispatch(passwordResetFailure(`Password reset failed with error: ${error.code}`));
       } else {
-        dispatch(passwordResetFailure('An unknown error occured. Please try again later'));
+        dispatch(passwordResetFailure(error as string));
       }
     }
   }
@@ -230,7 +280,7 @@ const login: ThunkActionCreatorPreset = (id: string, password: string) => {
       } else if (error.code) {
         dispatch(loginFailure(`Login failed with error ${error.code}`));
       } else {
-        dispatch(loginFailure('An unknown error occurred. Please try again later'));
+        dispatch(loginFailure(error as string));
       }
     }
   }
@@ -270,7 +320,7 @@ const signup: ThunkActionCreatorPreset = (username: string,
       } else if (error.code) {
         dispatch(signupFailure(`Signup failed with error: ${error.code}`));
       } else {
-        dispatch(signupFailure('An unknown error occurred. Please try again later'));
+        dispatch(signupFailure(error as string));
       }
     }
   }
@@ -300,6 +350,31 @@ const signupVerification: ThunkActionCreatorPreset = (username: string, code: st
   }
 }
 
+const forgotPassword: ThunkActionCreatorPreset = (username: string) => {
+  return async (dispatch) => {
+    try {
+      dispatch(forgotPasswordRequest());
+      await Auth.forgotPassword(username);
+      dispatch(forgotPasswordRequestSuccess());
+    } catch (error) {
+      dispatch(forgotPasswordRequestFailure(error as string));
+    }
+  }
+}
+
+const forgotPasswordSubmit: ThunkActionCreatorPreset =
+  (username: string, code: string, password: string) => {
+    return async (dispatch) => {
+      try {
+        dispatch(forgotPasswordSubmitRequest());
+        await Auth.forgotPasswordSubmit(username, code, password);
+        dispatch(forgotPasswordSubmitRequestSuccess());
+      } catch (error) {
+        dispatch(forgotPasswordSubmitRequestFailure(error as string));
+      }
+  }
+}
+
 export {
   login,
   loginFailureReset,
@@ -318,5 +393,9 @@ export {
   setSignupConfirmUsername,
   signupRequestComplete,
   redirectToSignup,
-  resetRedirectToSignup
+  resetRedirectToSignup,
+  forgotPassword,
+  forgotPasswordSubmit,
+  resetForgotPasswordLoginRedirect,
+  resetForgotPasswordRequestFailure
 };

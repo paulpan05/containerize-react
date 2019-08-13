@@ -15,19 +15,26 @@ export interface AuthState {
   loginNewPassword: boolean
   passwordResetFailed: boolean
   passwordResetFailedReason: string
-  user?: CognitoUser,
-  signingUp: boolean,
-  signupFailed: boolean,
-  signupFailedReason: string,
-  signupConfirm: boolean,
-  signupConfirmMedium: string,
-  signupConfirmUsername: string,
-  resendingSignup: boolean,
-  resendSuccess: boolean,
-  resendFailed: boolean,
-  verifyingSignup: boolean,
-  verifyFailed: boolean,
-  signedUp: boolean,
-  getUsernameToConfirm: boolean,
+  user?: CognitoUser
+  signingUp: boolean
+  signupFailed: boolean
+  signupFailedReason: string
+  signupConfirm: boolean
+  signupConfirmMedium: string
+  signupConfirmUsername: string
+  resendingSignup: boolean
+  resendSuccess: boolean
+  resendFailed: boolean
+  verifyingSignup: boolean
+  verifyFailed: boolean
+  signedUp: boolean
+  getUsernameToConfirm: boolean
   redirectToSignup: boolean
+  forgotPasswordProcessing: boolean
+  forgotPasswordFailed: boolean
+  forgotPasswordFailedReason: string
+  forgotPasswordConfirm: boolean
+  forgotPasswordConfirmFailed: boolean
+  forgotPasswordConfirmFailedReason: string
+  forgotPasswordLoginRedirect: boolean
 }

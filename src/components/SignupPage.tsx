@@ -293,7 +293,14 @@ const SignupPage = connect(mapStateToProps)((props: SignupPageProps) => {
                 </Button>
               </Grid>
               <Grid item>
-                <MuiLink component={Link} to='/login' variant='body1'>
+                <MuiLink
+                  component={Link}
+                  to='/login'
+                  variant='body1'
+                  onClick={() => {
+                    props.dispatch(backToLogin());
+                  }}
+                >
                   Back to log in
                 </MuiLink>
               </Grid>

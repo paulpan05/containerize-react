@@ -24,7 +24,14 @@ const initialState: AuthState = {
   verifyFailed: false,
   signedUp: false,
   getUsernameToConfirm: false,
-  redirectToSignup: false
+  redirectToSignup: false,
+  forgotPasswordProcessing: false,
+  forgotPasswordFailed: false,
+  forgotPasswordFailedReason: '',
+  forgotPasswordConfirm: false,
+  forgotPasswordConfirmFailed: false,
+  forgotPasswordConfirmFailedReason: '',
+  forgotPasswordLoginRedirect: false
 }
 
 const auth = (state = initialState, action: AnyAction) => {
@@ -107,7 +114,11 @@ const auth = (state = initialState, action: AnyAction) => {
         resendSuccess: false,
         verifyingSignup: false,
         verifyFailed: false,
-        getUsernameToConfirm: false
+        getUsernameToConfirm: false,
+        forgotPasswordProcessing: false,
+        forgotPasswordConfirm: false,
+        forgotPasswordConfirmFailed: false,
+        forgotPasswordFailed: false
       }
     
     case authConstants.SIGNUP_REQUEST:
@@ -225,6 +236,62 @@ const auth = (state = initialState, action: AnyAction) => {
         redirectToSignup: false
       }
     
+    case authConstants.FORGOT_PASSWORD_REQUEST:
+      return {
+        ...state,
+        forgotPasswordProcessing: true,
+        forgotPasswordFailed: false
+      }
+
+    case authConstants.FORGOT_PASSWORD_REQUEST_FAILURE:
+      return {
+        ...state,
+        forgotPasswordFailed: true,
+        forgotPasswordProcessing: false,
+        forgotPasswordFailedReason: action.reason
+      }
+
+    case authConstants.FORGOT_PASSWORD_REQUEST_SUCCESS:
+      return {
+        ...state,
+        forgotPasswordConfirm: true
+      }
+    
+    case authConstants.FORGOT_PASSWORD_SUBMIT_REQUEST:
+      return {
+        ...state,
+        forgotPasswordConfirm: false,
+        forgotPasswordConfirmFailed: false
+      }
+    
+    case authConstants.FORGOT_PASSWORD_SUBMIT_REQUEST_FAILURE:
+      return {
+        ...state,
+        forgotPasswordConfirm: true,
+        forgotPasswordConfirmFailed: true,
+        forgotPasswordConfirmFailedReason: action.reason
+      }
+
+    case authConstants.FORGOT_PASSWORD_SUBMIT_REQUEST_SUCCESS:
+      return {
+        ...state,
+        forgotPasswordConfirm: false,
+        forgotPasswordProcessing: false,
+        forgotPasswordLoginRedirect: true
+      }
+    
+    case authConstants.RESET_FORGOT_PASSWORD_LOGIN_REDIRECT:
+      return {
+        ...state,
+        forgotPasswordLoginRedirect: false
+      }
+    
+    case authConstants.RESET_FORGOT_PASSWORD_REQUEST_FAILURE:
+      return {
+        ...state,
+        forgotPasswordFailed: false
+      }
+
     default:
       return state;
   }

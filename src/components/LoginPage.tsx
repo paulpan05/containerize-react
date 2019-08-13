@@ -18,7 +18,8 @@ import {
   resetSignedUp,
   resendSignupVerification,
   redirectToSignup,
-  signupRequestComplete
+  signupRequestComplete,
+  resetForgotPasswordLoginRedirect
 } from '../redux/actions/auth';
 import { RootState } from '../types/redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -36,7 +37,8 @@ const mapStateToProps = (state: RootState) => {
     user: state.auth.user,
     signedUp: state.auth.signedUp,
     getUsernameToConfirm: state.auth.getUsernameToConfirm,
-    redirectToSignup: state.auth.redirectToSignup
+    redirectToSignup: state.auth.redirectToSignup,
+    forgotPasswordLoginRedirect: state.auth.forgotPasswordLoginRedirect
   }
 }
 
@@ -238,6 +240,18 @@ const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
             item={true}
             className={classes.innerGrid}
           >
+            {props.forgotPasswordLoginRedirect && (
+              <AlertSnackbar
+                variant='success'
+                onClose={() => {
+                  props.dispatch(
+                    resetForgotPasswordLoginRedirect()
+                  );
+                }}
+                className={classes.snackbarMargin}
+                message='Password successfully reset via forgot password'
+              />
+            )}
             {props.signedUp && (
               <AlertSnackbar
                 variant='success'
@@ -315,7 +329,12 @@ const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
                 </Button>
               </Grid>
               <Grid item>
-                <MuiLink component={Link} to='/forgot-password' variant='body1'>
+                <MuiLink
+                  component={Link}
+                  to='/forgot-password'
+                  variant='body1'
+                  onClick={() => {props.dispatch(resetForgotPasswordLoginRedirect())}}
+                >
                   Forgot password?
                 </MuiLink>
               </Grid>
