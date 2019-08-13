@@ -27,5 +27,7 @@ export interface AuthState {
   resendFailed: boolean,
   verifyingSignup: boolean,
   verifyFailed: boolean,
-  signedUp: boolean
+  signedUp: boolean,
+  getUsernameToConfirm: boolean,
+  redirectToSignup: boolean
 }

@@ -22,7 +22,9 @@ const initialState: AuthState = {
   resendFailed: false,
   verifyingSignup: false,
   verifyFailed: false,
-  signedUp: false
+  signedUp: false,
+  getUsernameToConfirm: false,
+  redirectToSignup: false
 }
 
 const auth = (state = initialState, action: AnyAction) => {
@@ -61,6 +63,12 @@ const auth = (state = initialState, action: AnyAction) => {
         loggedIn: true,
         user: action.user
       };
+
+    case authConstants.GET_USERNAME_TO_CONFIRM:
+      return {
+        ...state,
+        getUsernameToConfirm: true
+      }
     
     case authConstants.PASSWORD_RESET_REQUEST:
       return {
@@ -98,7 +106,8 @@ const auth = (state = initialState, action: AnyAction) => {
         resendFailed: false,
         resendSuccess: false,
         verifyingSignup: false,
-        verifyFailed: false
+        verifyFailed: false,
+        getUsernameToConfirm: false
       }
     
     case authConstants.SIGNUP_REQUEST:
@@ -198,6 +207,24 @@ const auth = (state = initialState, action: AnyAction) => {
         signedUp: false
       }
 
+    case authConstants.SET_SIGNUP_CONFIRM_USERNAME:
+      return {
+        ...state,
+        signupConfirmUsername: action.username
+      }
+    
+    case authConstants.REDIRECT_TO_SIGNUP:
+      return {
+        ...state,
+        redirectToSignup: true
+      }
+
+    case authConstants.RESET_REDIRECT_TO_SIGNUP:
+      return {
+        ...state,
+        redirectToSignup: false
+      }
+    
     default:
       return state;
   }

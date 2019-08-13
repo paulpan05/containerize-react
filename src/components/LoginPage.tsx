@@ -15,7 +15,10 @@ import {
   loginPasswordReset,
   passwordResetFailureReset,
   backToLogin,
-  resetSignedUp
+  resetSignedUp,
+  resendSignupVerification,
+  redirectToSignup,
+  signupRequestComplete
 } from '../redux/actions/auth';
 import { RootState } from '../types/redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -31,13 +34,16 @@ const mapStateToProps = (state: RootState) => {
     passwordResetFailed: state.auth.passwordResetFailed,
     passwordResetFailedReason: state.auth.passwordResetFailedReason,
     user: state.auth.user,
-    signedUp: state.auth.signedUp
+    signedUp: state.auth.signedUp,
+    getUsernameToConfirm: state.auth.getUsernameToConfirm,
+    redirectToSignup: state.auth.redirectToSignup
   }
 }
 
 const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
   const [id, setId] = React.useState();
   const [password, setPassword] = React.useState();
+  const [username, setUsername] = React.useState();
   React.useEffect(() => {
     if (props.loginFailed) {
       setId(undefined);
@@ -58,6 +64,78 @@ const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
       <Grid item>
         <img src={logo} alt='logo' className={classes.logo} />
       </Grid>
+      {props.redirectToSignup && (
+        <Redirect to='/signup' />
+      )}
+      {props.getUsernameToConfirm && (
+        <React.Fragment>
+          <Grid item>
+            <Typography align='center' variant='h5' gutterBottom>
+              Please enter username for further account confirmation.
+            </Typography>
+          </Grid>
+          <Grid
+            container
+            item={true}
+            className={classes.innerGrid}
+          >
+            <TextField
+              label='Username'
+              type='text'
+              name='username'
+              autoComplete='username'
+              margin='normal'
+              variant='outlined'
+              fullWidth
+              onChange={(event) => { setUsername(event.target.value) }}
+              onKeyPress={(event) => {
+                if (event.key === 'Enter' && username) {
+                  event.preventDefault();
+                  props.dispatch(backToLogin());
+                  props.dispatch(signupRequestComplete(username, 'Email'));
+                  props.dispatch(resendSignupVerification(username));
+                  props.dispatch(redirectToSignup());
+                }
+              }}
+            />
+            <Grid
+              container
+              direction='row'
+              justify='center'
+              alignItems='center'
+              spacing={6}
+              className={classes.loginGrid}
+            >
+              <Grid item>
+                <Button
+                  variant='contained'
+                  color='primary'
+                  onClick={(event) => {
+                    event.preventDefault();
+                    props.dispatch(backToLogin());
+                    props.dispatch(signupRequestComplete(username, 'Email'));
+                    props.dispatch(resendSignupVerification(username));
+                    props.dispatch(redirectToSignup());
+                  }}
+                >
+                  Go confirm account
+                </Button>
+              </Grid>
+              <Grid item>
+                <MuiLink
+                  variant='body1'
+                  onClick={(event: React.MouseEvent) => {
+                    event.preventDefault();
+                    props.dispatch(backToLogin());
+                  }}
+                >
+                  Back to login
+                </MuiLink>
+              </Grid>
+            </Grid>
+          </Grid>
+        </React.Fragment>
+      )}
       {props.loggedIn && (
         <Redirect to='/console' />
       )}
@@ -255,7 +333,7 @@ const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
                 component={Link}
                 to='/signup'
                 variant='body1'
-                onClick={() => {props.dispatch(resetSignedUp())}}
+                onClick={() => { props.dispatch(resetSignedUp()) }}
               >
                 Sign up
               </MuiLink>

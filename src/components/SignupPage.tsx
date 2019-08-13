@@ -17,7 +17,8 @@ import {
   resendSignupSuccessReset,
   resendSignupFailureReset,
   backToLogin,
-  resendSignupVerification
+  resendSignupVerification,
+  resetRedirectToSignup
 } from '../redux/actions/auth';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import AlertSnackbar from './AlertSnackbar';
@@ -44,6 +45,19 @@ const SignupPage = connect(mapStateToProps)((props: SignupPageProps) => {
   const [email, setEmail] = React.useState();
   const [password, setPassword] = React.useState();
   const [confirmCode, setConfirmCode] = React.useState();
+  React.useEffect(() => {
+    props.dispatch(resetRedirectToSignup());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  React.useEffect(() => {
+    if (props.signupFailed) {
+      setUsername(undefined);
+      setEmail(undefined);
+      setPassword(undefined);
+    } else if (props.verifyFailed) {
+      setConfirmCode(undefined);
+    }
+  }, [props.signupFailed, props.verifyFailed]);
   const classes = signupPageStyles();
   return (
     <Grid

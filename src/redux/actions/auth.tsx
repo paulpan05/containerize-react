@@ -148,6 +148,31 @@ const resetSignedUp = () => {
   }
 }
 
+const setSignupConfirmUsername = (username: string) => {
+  return {
+    type: authConstants.SET_SIGNUP_CONFIRM_USERNAME,
+    username
+  }
+}
+
+const getUsernameToConfirm = () => {
+  return {
+    type: authConstants.GET_USERNAME_TO_CONFIRM
+  }
+}
+
+const redirectToSignup = () => {
+  return {
+    type: authConstants.REDIRECT_TO_SIGNUP
+  }
+}
+
+const resetRedirectToSignup = () => {
+  return {
+    type: authConstants.RESET_REDIRECT_TO_SIGNUP
+  }
+}
+
 const handleAuthChallenge = (user: any, dispatch: ThunkDispatchPreset) => {
   switch (user.challengeName) {
     case 'NEW_PASSWORD_REQUIRED':
@@ -195,6 +220,7 @@ const login: ThunkActionCreatorPreset = (id: string, password: string) => {
       }
     } catch (error) {
       if (error.code === 'UserNotConfirmedException') {
+        dispatch(getUsernameToConfirm());
       } else if (error.code === 'PasswordResetRequiredException') {
         dispatch(loginFailure('Please click "Forgot password?" to reset password'));
       } else if (error.code === 'NotAuthorizedException') {
@@ -288,5 +314,9 @@ export {
   resendSignupFailureReset,
   resendSignupSuccessReset,
   signupVerificationFailureReset,
-  resetSignedUp
+  resetSignedUp,
+  setSignupConfirmUsername,
+  signupRequestComplete,
+  redirectToSignup,
+  resetRedirectToSignup
 };
