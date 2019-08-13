@@ -14,7 +14,8 @@ import {
   loginFailureReset,
   loginPasswordReset,
   passwordResetFailureReset,
-  backToLogin
+  backToLogin,
+  resetSignedUp
 } from '../redux/actions/auth';
 import { RootState } from '../types/redux';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -29,7 +30,8 @@ const mapStateToProps = (state: RootState) => {
     loginFailedReason: state.auth.loginFailedReason,
     passwordResetFailed: state.auth.passwordResetFailed,
     passwordResetFailedReason: state.auth.passwordResetFailedReason,
-    user: state.auth.user
+    user: state.auth.user,
+    signedUp: state.auth.signedUp
   }
 }
 
@@ -158,6 +160,18 @@ const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
             item={true}
             className={classes.innerGrid}
           >
+            {props.signedUp && (
+              <AlertSnackbar
+                variant='success'
+                onClose={() => {
+                  props.dispatch(
+                    resetSignedUp()
+                  );
+                }}
+                className={classes.snackbarMargin}
+                message='Signup success'
+              />
+            )}
             {props.loginFailed && (
               <AlertSnackbar
                 variant='error'
@@ -237,7 +251,12 @@ const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
               <Typography variant='body1'>
                 New to the app?&nbsp;
               </Typography>
-              <MuiLink component={Link} to='/signup' variant='body1'>
+              <MuiLink
+                component={Link}
+                to='/signup'
+                variant='body1'
+                onClick={() => {props.dispatch(resetSignedUp())}}
+              >
                 Sign up
               </MuiLink>
             </Grid>

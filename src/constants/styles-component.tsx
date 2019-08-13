@@ -32,7 +32,7 @@ const loginPageStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const signupPageStyles = makeStyles(
+const signupPageStyles = makeStyles((theme: Theme) =>
   createStyles({
     pageGrid: {
       minHeight: '100vh',
@@ -45,10 +45,24 @@ const signupPageStyles = makeStyles(
     createUserGrid: {
       marginTop: '0.25em'
     },
+    loadProgress: {
+      margin: theme.spacing(3)
+    },
     logo: {
       width: '500px',
       maxWidth: '80vw',
       height: 'auto'
+    },
+    snackbarMargin: {
+      margin: theme.spacing(1),
+      width: '100%'
+    },
+    confirmGoBackGrid: {
+      marginTop: '2em',
+      marginBottom: '2em'
+    },
+    confirmGrid: {
+      marginTop: '0.25em'
     }
   })
 );

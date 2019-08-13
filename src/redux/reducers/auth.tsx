@@ -90,7 +90,15 @@ const auth = (state = initialState, action: AnyAction) => {
         loginNewPassword: false,
         user: undefined,
         loggingIn: false,
-        loginFailed: false
+        loginFailed: false,
+        signingUp: false,
+        signupFailed: false,
+        signupConfirm: false,
+        resendingSignup: false,
+        resendFailed: false,
+        resendSuccess: false,
+        verifyingSignup: false,
+        verifyFailed: false
       }
     
     case authConstants.SIGNUP_REQUEST:
@@ -156,6 +164,7 @@ const auth = (state = initialState, action: AnyAction) => {
       return {
         ...state,
         verifyingSignup: false,
+        signupConfirm: false,
         signedUp: true
       }
     
