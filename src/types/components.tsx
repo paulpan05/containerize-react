@@ -32,8 +32,10 @@ export interface SignupPageProps {
   resendingSignup: boolean
   resendSuccess: boolean
   resendFailed: boolean
+  resendFailedReason: string
   verifyingSignup: boolean
   verifyFailed: boolean
+  verifyFailedReason: string
   signedUp: boolean
 }
 

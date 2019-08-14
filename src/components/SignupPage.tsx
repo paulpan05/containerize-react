@@ -18,7 +18,8 @@ import {
   resendSignupFailureReset,
   backToLogin,
   resendSignupVerification,
-  resetRedirectToSignup
+  resetRedirectToSignup,
+  signupVerificationFailureReset
 } from '../redux/actions/auth';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import AlertSnackbar from './AlertSnackbar';
@@ -34,8 +35,10 @@ const mapStateToProps = (state: RootState) => {
     resendingSignup: state.auth.resendingSignup,
     resendSuccess: state.auth.resendSuccess,
     resendFailed: state.auth.resendFailed,
+    resendFailedReason: state.auth.resendFailedReason,
     verifyingSignup: state.auth.verifyingSignup,
     verifyFailed: state.auth.verifyFailed,
+    verifyFailedReason: state.auth.verifyFailedReason,
     signedUp: state.auth.signedUp
   }
 }
@@ -111,7 +114,19 @@ const SignupPage = connect(mapStateToProps)((props: SignupPageProps) => {
                   );
                 }}
                 className={classes.snackbarMargin}
-                message='Code resend failed'
+                message={props.resendFailedReason}
+              />
+            )}
+            {props.verifyFailed && (
+              <AlertSnackbar
+                variant='error'
+                onClose={() => {
+                  props.dispatch(
+                    signupVerificationFailureReset()
+                  );
+                }}
+                className={classes.snackbarMargin}
+                message={props.verifyFailedReason}
               />
             )}
             <TextField

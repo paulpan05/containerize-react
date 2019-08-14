@@ -20,8 +20,10 @@ const initialState: AuthState = {
   resendingSignup: false,
   resendSuccess: false,
   resendFailed: false,
+  resendFailedReason: '',
   verifyingSignup: false,
   verifyFailed: false,
+  verifyFailedReason: '',
   signedUp: false,
   getUsernameToConfirm: false,
   redirectToSignup: false,
@@ -163,7 +165,8 @@ const auth = (state = initialState, action: AnyAction) => {
       return {
         ...state,
         resendingSignup: false,
-        resendFailed: true
+        resendFailed: true,
+        resendFailedReason: action.reason
       }
 
     case authConstants.SIGNUP_VERIFICATION_REQUEST:
@@ -177,7 +180,8 @@ const auth = (state = initialState, action: AnyAction) => {
       return {
         ...state,
         verifyingSignup: false,
-        verifyFailed: true
+        verifyFailed: true,
+        verifyFailedReason: action.reason
       }
 
     case authConstants.SIGNUP_SUCCESS:
@@ -290,6 +294,12 @@ const auth = (state = initialState, action: AnyAction) => {
       return {
         ...state,
         forgotPasswordFailed: false
+      }
+
+    case authConstants.RESET_FORGOT_PASSWORD_SUBMIT_REQUEST_FAILURE:
+      return {
+        ...state,
+        forgotPasswordConfirmFailed: false
       }
 
     default:

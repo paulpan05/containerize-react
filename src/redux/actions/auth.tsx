@@ -94,9 +94,10 @@ const resendSignupSuccess = () => {
   }
 }
 
-const resendSignupFailure = () => {
+const resendSignupFailure = (reason: string) => {
   return {
-    type: authConstants.RESEND_SIGNUP_FAILURE
+    type: authConstants.RESEND_SIGNUP_FAILURE,
+    reason
   }
 }
 
@@ -106,9 +107,10 @@ const signupVerificationRequest = () => {
   }
 }
 
-const signupVerificationFailure = () => {
+const signupVerificationFailure = (reason: string) => {
   return {
-    type: authConstants.SIGNUP_VERIFICATION_FAILURE
+    type: authConstants.SIGNUP_VERIFICATION_FAILURE,
+    reason
   }
 }
 
@@ -223,6 +225,12 @@ const resetForgotPasswordLoginRedirect = () => {
   }
 }
 
+const resetForgotPasswordSubmitRequestFailure = () => {
+  return {
+    type: authConstants.RESET_FORGOT_PASSWORD_SUBMIT_REQUEST_FAILURE
+  }
+}
+
 const handleAuthChallenge = (user: any, dispatch: ThunkDispatchPreset) => {
   switch (user.challengeName) {
     case 'NEW_PASSWORD_REQUIRED':
@@ -247,12 +255,10 @@ const loginPasswordReset: ThunkActionCreatorPreset = (user: any, newPassword: an
         dispatch(loginSuccess(loggedUser as CognitoUser));
       }
     } catch (error) {
-      if (error.code === 'InvalidPasswordException') {
-        dispatch(passwordResetFailure('Invalid new password entered'))
-      } else if (error.code) {
-        dispatch(passwordResetFailure(`Password reset failed with error: ${error.code}`));
+      if (error.message) {
+        dispatch(passwordResetFailure(error.message));
       } else {
-        dispatch(passwordResetFailure(error as string));
+        dispatch(passwordResetFailure(error));
       }
     }
   }
@@ -271,16 +277,10 @@ const login: ThunkActionCreatorPreset = (id: string, password: string) => {
     } catch (error) {
       if (error.code === 'UserNotConfirmedException') {
         dispatch(getUsernameToConfirm());
-      } else if (error.code === 'PasswordResetRequiredException') {
-        dispatch(loginFailure('Please click "Forgot password?" to reset password'));
-      } else if (error.code === 'NotAuthorizedException') {
-        dispatch(loginFailure('Unauthorized login: wrong password or blocked by server'));
-      } else if (error.code === 'UserNotFoundException') {
-        dispatch(loginFailure('Username or email does not exist'));
-      } else if (error.code) {
-        dispatch(loginFailure(`Login failed with error ${error.code}`));
+      } else if (error.message) {
+        dispatch(loginFailure(error.message));
       } else {
-        dispatch(loginFailure(error as string));
+        dispatch(loginFailure(error));
       }
     }
   }
@@ -309,18 +309,10 @@ const signup: ThunkActionCreatorPreset = (username: string,
         dispatch(signupRequestComplete(username, deliveryMedium));
       }
     } catch (error) {
-      if (error.code === 'CodeDeliveryFailureException') {
-        dispatch(signupFailure('Confirmation code failed to deliver. Please sign in with new account to redeliver'));
-      } else if (error.code === 'InvalidPasswordException') {
-        dispatch(signupFailure('Invalid password for new account'));
-      } else if (error.code === 'NotAuthorizedException') {
-        dispatch(signupFailure('User is not authorized to sign up at the moment'));
-      } else if (error.code === 'UsernameExistsException') {
-        dispatch(signupFailure('Username already exists'));
-      } else if (error.code) {
-        dispatch(signupFailure(`Signup failed with error: ${error.code}`));
+      if (error.message) {
+        dispatch(signupFailure(error.message));
       } else {
-        dispatch(signupFailure(error as string));
+        dispatch(signupFailure(error));
       }
     }
   }
@@ -333,7 +325,11 @@ const resendSignupVerification: ThunkActionCreatorPreset = (username: string) =>
       await Auth.resendSignUp(username);
       dispatch(resendSignupSuccess());
     } catch (error) {
-      dispatch(resendSignupFailure());
+      if (error.message) {
+        dispatch(resendSignupFailure(error.message));
+      } else {
+        dispatch(resendSignupFailure(error));
+      }
     }
   }
 }
@@ -345,7 +341,11 @@ const signupVerification: ThunkActionCreatorPreset = (username: string, code: st
       await Auth.confirmSignUp(username, code);
       dispatch(signupSuccess());
     } catch (error) {
-      dispatch(signupVerificationFailure());
+      if (error.message) {
+        dispatch(signupVerificationFailure(error.message));
+      } else {
+        dispatch(signupVerificationFailure(error));
+      }
     }
   }
 }
@@ -357,7 +357,11 @@ const forgotPassword: ThunkActionCreatorPreset = (username: string) => {
       await Auth.forgotPassword(username);
       dispatch(forgotPasswordRequestSuccess());
     } catch (error) {
-      dispatch(forgotPasswordRequestFailure(error as string));
+      if (error.message) {
+        dispatch(forgotPasswordRequestFailure(error.message));
+      } else {
+        dispatch(forgotPasswordRequestFailure(error));
+      }
     }
   }
 }
@@ -370,10 +374,14 @@ const forgotPasswordSubmit: ThunkActionCreatorPreset =
         await Auth.forgotPasswordSubmit(username, code, password);
         dispatch(forgotPasswordSubmitRequestSuccess());
       } catch (error) {
-        dispatch(forgotPasswordSubmitRequestFailure(error as string));
+        if (error.message) {
+          dispatch(forgotPasswordSubmitRequestFailure(error.message));
+        } else {
+          dispatch(forgotPasswordSubmitRequestFailure(error));
+        }
       }
+    }
   }
-}
 
 export {
   login,
@@ -397,5 +405,6 @@ export {
   forgotPassword,
   forgotPasswordSubmit,
   resetForgotPasswordLoginRedirect,
-  resetForgotPasswordRequestFailure
+  resetForgotPasswordRequestFailure,
+  resetForgotPasswordSubmitRequestFailure
 };

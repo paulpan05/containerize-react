@@ -25,8 +25,10 @@ export interface AuthState {
   resendingSignup: boolean
   resendSuccess: boolean
   resendFailed: boolean
+  resendFailedReason: string
   verifyingSignup: boolean
   verifyFailed: boolean
+  verifyFailedReason: string
   signedUp: boolean
   getUsernameToConfirm: boolean
   redirectToSignup: boolean

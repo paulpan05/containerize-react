@@ -8,7 +8,7 @@ import logo from '../img/logo.png';
 import { Redirect } from 'react-router';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-import { forgotPassword, resetForgotPasswordRequestFailure, backToLogin } from '../redux/actions/auth';
+import { forgotPassword, resetForgotPasswordRequestFailure, backToLogin, resetForgotPasswordSubmitRequestFailure, forgotPasswordSubmit } from '../redux/actions/auth';
 import AlertSnackbar from './AlertSnackbar';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Button from '@material-ui/core/Button';
@@ -29,6 +29,8 @@ const mapStateToProps = (state: RootState) => {
 
 const ForgotPasswordPage = connect(mapStateToProps)((props: ForgotPasswordPageProps) => {
   const [username, setUsername] = React.useState();
+  const [confirmCode, setConfirmCode] = React.useState();
+  const [newPassword, setNewPassword] = React.useState();
   const classes = forgotPasswordPageStyles();
   return (
     <Grid
@@ -43,6 +45,68 @@ const ForgotPasswordPage = connect(mapStateToProps)((props: ForgotPasswordPagePr
       </Grid>
       {props.forgotPasswordLoginRedirect && (
         <Redirect to='/login' />
+      )}
+      {props.forgotPasswordConfirm && (
+        <React.Fragment>
+          <Grid item>
+            <Typography
+              align='center'
+              variant='h5'
+              gutterBottom
+            >
+              Please enter new password and confirmation code to reset.
+            </Typography>
+          </Grid>
+          <Grid
+            container
+            item={true}
+            className={classes.innerGrid}
+          >
+            {props.forgotPasswordConfirmFailed && (
+              <AlertSnackbar
+                variant='error'
+                onClose={() => {
+                  props.dispatch(
+                    resetForgotPasswordSubmitRequestFailure()
+                  );
+                }}
+                className={classes.snackbarMargin}
+                message={props.forgotPasswordConfirmFailedReason}
+              />
+            )}
+            <TextField
+              label='Confirmation code'
+              type='text'
+              name='confirmcode'
+              margin='normal'
+              variant='outlined'
+              fullWidth
+              onChange={(event) => { setConfirmCode(event.target.value) }}
+              onKeyPress={(event) => {
+                if (event.key === 'Enter' && newPassword && confirmCode) {
+                  event.preventDefault();
+                  props.dispatch(forgotPasswordSubmit(username, confirmCode, newPassword));
+                }
+              }}
+            />
+            <TextField
+              label='New password'
+              type='password'
+              name='password'
+              autoComplete='current-password'
+              margin='normal'
+              variant='outlined'
+              onChange={(event) => { setNewPassword(event.target.value) }}
+              onKeyPress={(event) => {
+                if (event.key === 'Enter' && newPassword && confirmCode) {
+                  event.preventDefault();
+                  props.dispatch(forgotPasswordSubmit(username, confirmCode, newPassword));
+                }
+              }}
+              fullWidth
+            />
+          </Grid>
+        </React.Fragment>
       )}
       {props.forgotPasswordProcessing && !props.forgotPasswordConfirm && (
         <React.Fragment>
@@ -123,7 +187,7 @@ const ForgotPasswordPage = connect(mapStateToProps)((props: ForgotPasswordPagePr
               <Grid item>
                 <MuiLink
                   component={Link}
-                  to='/forgot-password'
+                  to='/login'
                   variant='body1'
                   onClick={() => {props.dispatch(backToLogin())}}
                 >
