@@ -212,7 +212,7 @@ const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
           </Grid>
         </React.Fragment>
       )}
-      {props.loggingIn && !props.loginNewPassword && (
+      {props.loggingIn && !props.loginNewPassword && !props.getUsernameToConfirm && (
         <React.Fragment>
           <Grid item>
             <Typography align='center' variant='h4'>
