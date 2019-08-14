@@ -1,6 +1,6 @@
 import { AnyAction } from "redux";
 import { authConstants } from "../constants/auth";
-import { AuthState } from "../../types/redux";
+import { AuthState } from "../types/auth";
 
 const initialState: AuthState = {
   loggingIn: false,

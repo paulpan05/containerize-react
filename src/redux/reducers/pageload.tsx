@@ -1,4 +1,4 @@
-import { PageloadState } from "../../types/redux";
+import { PageloadState } from "../types/pageload";
 import { AnyAction } from "redux";
 import { pageloadConstants } from "../constants/pageload";
 

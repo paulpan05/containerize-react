@@ -1,13 +1,5 @@
-import { ActionCreator, AnyAction } from 'redux';
-import { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import { CognitoUser } from 'amazon-cognito-identity-js';
+import { CognitoUser } from "amazon-cognito-identity-js";
 
-export type ThunkActionCreatorPreset = ActionCreator<ThunkAction<void, {}, {}, AnyAction>>;
-export type ThunkDispatchPreset = ThunkDispatch<{}, {}, AnyAction>;
-export interface RootState {
-  auth: AuthState
-  pageload: PageloadState
-}
 export interface AuthState {
   loggingIn: boolean
   loggedIn: boolean
@@ -41,8 +33,4 @@ export interface AuthState {
   forgotPasswordConfirmFailedReason: string
   forgotPasswordLoginRedirect: boolean
   username: string
-}
-
-export interface PageloadState {
-  pageLoading: boolean
 }

@@ -21,7 +21,7 @@ import {
   signupRequestComplete,
   resetForgotPasswordLoginRedirect
 } from '../redux/actions/auth';
-import { RootState } from '../types/redux';
+import { RootState } from '../redux/types/root';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import AlertSnackbar from './AlertSnackbar';
 

@@ -7,7 +7,7 @@ import MuiLink from '@material-ui/core/Link';
 import { Link, Redirect } from 'react-router-dom';
 import { signupPageStyles } from '../constants/styles-component';
 import logo from '../img/logo.png';
-import { RootState } from '../types/redux';
+import { RootState } from '../redux/types/root';
 import { connect } from 'react-redux';
 import { SignupPageProps } from '../types/components';
 import {

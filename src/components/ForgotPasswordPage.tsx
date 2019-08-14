@@ -1,5 +1,5 @@
 import React from 'react';
-import { RootState } from '../types/redux';
+import { RootState } from '../redux/types/root';
 import { connect } from 'react-redux';
 import { ForgotPasswordPageProps } from '../types/components';
 import Grid from '@material-ui/core/Grid';
