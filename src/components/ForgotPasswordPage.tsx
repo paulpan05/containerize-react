@@ -46,7 +46,7 @@ const ForgotPasswordPage = connect(mapStateToProps)((props: ForgotPasswordPagePr
         <img src={logo} alt='logo' className={classes.logo} />
       </Grid>
       {props.loggedIn && (
-        <Redirect to='/main' />
+        <Redirect to='/' />
       )}
       {props.forgotPasswordLoginRedirect && (
         <Redirect to='/login' />

@@ -133,7 +133,7 @@ const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
         </React.Fragment>
       )}
       {props.loggedIn && (
-        <Redirect to='/main' />
+        <Redirect to='/' />
       )}
       {props.loggingIn && props.loginNewPassword && (
         <React.Fragment>
