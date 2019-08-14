@@ -46,14 +46,6 @@ const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
   const [id, setId] = React.useState();
   const [password, setPassword] = React.useState();
   const [username, setUsername] = React.useState();
-  React.useEffect(() => {
-    if (props.loginFailed) {
-      setId(undefined);
-      setPassword(undefined);
-    } else if (props.loginNewPassword) {
-      setPassword(undefined);
-    }
-  }, [props.loginFailed, props.loginNewPassword]);
   const classes = loginPageStyles();
   return (
     <Grid
