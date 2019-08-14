@@ -386,6 +386,7 @@ const forgotPasswordSubmit: ThunkActionCreatorPreset =
 
 export {
   login,
+  loginSuccess,
   loginFailureReset,
   loginPasswordReset,
   passwordResetRequest,

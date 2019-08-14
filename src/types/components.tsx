@@ -23,6 +23,7 @@ export interface LoginPageProps {
 
 export interface SignupPageProps {
   dispatch: Dispatch<any>
+  loggedIn: boolean
   signingUp: boolean
   signupFailed: boolean
   signupFailedReason: string
@@ -41,6 +42,7 @@ export interface SignupPageProps {
 
 export interface ForgotPasswordPageProps {
   dispatch: Dispatch<any>
+  loggedIn: boolean
   forgotPasswordProcessing: boolean
   forgotPasswordFailed: boolean
   forgotPasswordFailedReason: string
@@ -49,6 +51,10 @@ export interface ForgotPasswordPageProps {
   forgotPasswordConfirmFailedReason: string
   forgotPasswordLoginRedirect: boolean
   username: string
+}
+
+export interface AppProps {
+  dispatch: Dispatch<any>
 }
 
 export const variantIcon = {

@@ -26,6 +26,7 @@ import AlertSnackbar from './AlertSnackbar';
 
 const mapStateToProps = (state: RootState) => {
   return {
+    loggedIn: state.auth.loggedIn,
     signingUp: state.auth.signingUp,
     signupFailed: state.auth.signupFailed,
     signupFailedReason: state.auth.signupFailedReason,
@@ -64,6 +65,9 @@ const SignupPage = connect(mapStateToProps)((props: SignupPageProps) => {
       <Grid item>
         <img src={logo} alt='logo' className={classes.logo} />
       </Grid>
+      {props.loggedIn && (
+        <Redirect to='/console' />
+      )}
       {props.signedUp && (
         <Redirect to='/login' />
       )}

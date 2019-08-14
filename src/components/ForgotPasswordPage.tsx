@@ -17,6 +17,7 @@ import MuiLink from '@material-ui/core/Link';
 
 const mapStateToProps = (state: RootState) => {
   return {
+    loggedIn: state.auth.loggedIn,
     forgotPasswordProcessing: state.auth.forgotPasswordProcessing,
     forgotPasswordFailed: state.auth.forgotPasswordFailed,
     forgotPasswordFailedReason: state.auth.forgotPasswordFailedReason,
@@ -44,6 +45,9 @@ const ForgotPasswordPage = connect(mapStateToProps)((props: ForgotPasswordPagePr
       <Grid item>
         <img src={logo} alt='logo' className={classes.logo} />
       </Grid>
+      {props.loggedIn && (
+        <Redirect to='/console' />
+      )}
       {props.forgotPasswordLoginRedirect && (
         <Redirect to='/login' />
       )}
