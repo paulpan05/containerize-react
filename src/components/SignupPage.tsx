@@ -188,25 +188,31 @@ const SignupPage = connect(mapStateToProps)((props: SignupPageProps) => {
           </Grid>
         </React.Fragment>
       )}
-      {(props.signingUp || props.resendingSignup || props.verifyingSignup) && (
-        <React.Fragment>
-          <Grid item>
-            <Typography align='center' variant='h4'>
-              {() => {
-                if (props.signingUp) {
-                  return 'Signing up';
-                } else if (props.resendingSignup) {
-                  return 'Resending Code';
-                } else {
-                  return 'Verifying Signup';
-                }
-              }}
+      {props.signingUp && (
+        <Grid item>
+          <Typography align='center' variant='h4'>
+            Signing up
             </Typography>
-          </Grid>
-          <Grid item>
-            <CircularProgress size='10em' className={classes.loadProgress} />
-          </Grid>
-        </React.Fragment>
+        </Grid>
+      )}
+      {props.resendingSignup && (
+        <Grid item>
+          <Typography align='center' variant='h4'>
+            Resending code
+            </Typography>
+        </Grid>
+      )}
+      {props.verifyingSignup && (
+        <Grid item>
+          <Typography align='center' variant='h4'>
+            Verifying signup
+            </Typography>
+        </Grid>
+      )}
+      {(props.signingUp || props.resendingSignup || props.verifyingSignup) && (
+        <Grid item>
+          <CircularProgress size='10em' className={classes.loadProgress} />
+        </Grid>
       )}
       {!props.signingUp && !props.signupConfirm && (
         <React.Fragment>
