@@ -1,4 +1,4 @@
-import { authConstants } from '../../constants/redux/auth';
+import { authConstants } from '../constants/auth';
 import { Auth } from 'aws-amplify';
 import { ThunkActionCreatorPreset, ThunkDispatchPreset } from '../../types/redux';
 import { CognitoUser } from 'amazon-cognito-identity-js';

@@ -16,7 +16,7 @@ const RootRoute = connect(mapStateToProps)((props: RootRouteProps) => {
     <Route exact path='/' render={() => (
       props.pageLoading ? (
         props.loggedIn ?
-          (<Redirect to='/console' />) :
+          (<Redirect to='/main' />) :
           (<Redirect to='/login' />)
       ) : (<React.Fragment />))}
     />

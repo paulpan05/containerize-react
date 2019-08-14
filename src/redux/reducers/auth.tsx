@@ -1,5 +1,5 @@
 import { AnyAction } from "redux";
-import { authConstants } from "../../constants/redux/auth";
+import { authConstants } from "../constants/auth";
 import { AuthState } from "../../types/redux";
 
 const initialState: AuthState = {

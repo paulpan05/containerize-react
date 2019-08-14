@@ -1,6 +1,6 @@
 import { PageloadState } from "../../types/redux";
 import { AnyAction } from "redux";
-import { pageloadConstants } from "../../constants/redux/pageload";
+import { pageloadConstants } from "../constants/pageload";
 
 const initialState: PageloadState = {
   pageLoading: true

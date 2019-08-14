@@ -1,4 +1,4 @@
-import { pageloadConstants } from "../../constants/redux/pageload";
+import { pageloadConstants } from "../constants/pageload";
 
 const loadingPage = () => {
   return {
