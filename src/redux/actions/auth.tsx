@@ -188,9 +188,10 @@ const forgotPasswordRequestFailure = (reason: string) => {
   }
 }
 
-const forgotPasswordRequestSuccess = () => {
+const forgotPasswordRequestSuccess = (username: string) => {
   return {
-    type: authConstants.FORGOT_PASSWORD_REQUEST_SUCCESS
+    type: authConstants.FORGOT_PASSWORD_REQUEST_SUCCESS,
+    username
   }
 }
 
@@ -355,7 +356,7 @@ const forgotPassword: ThunkActionCreatorPreset = (username: string) => {
     try {
       dispatch(forgotPasswordRequest());
       await Auth.forgotPassword(username);
-      dispatch(forgotPasswordRequestSuccess());
+      dispatch(forgotPasswordRequestSuccess(username));
     } catch (error) {
       if (error.message) {
         dispatch(forgotPasswordRequestFailure(error.message));

@@ -23,7 +23,8 @@ const mapStateToProps = (state: RootState) => {
     forgotPasswordConfirm: state.auth.forgotPasswordConfirm,
     forgotPasswordConfirmFailed: state.auth.forgotPasswordConfirmFailed,
     forgotPasswordConfirmFailedReason: state.auth.forgotPasswordConfirmFailedReason,
-    forgotPasswordLoginRedirect: state.auth.forgotPasswordLoginRedirect
+    forgotPasswordLoginRedirect: state.auth.forgotPasswordLoginRedirect,
+    username: state.auth.username
   }
 }
 
@@ -85,7 +86,7 @@ const ForgotPasswordPage = connect(mapStateToProps)((props: ForgotPasswordPagePr
               onKeyPress={(event) => {
                 if (event.key === 'Enter' && newPassword && confirmCode) {
                   event.preventDefault();
-                  props.dispatch(forgotPasswordSubmit(username, confirmCode, newPassword));
+                  props.dispatch(forgotPasswordSubmit(props.username, confirmCode, newPassword));
                 }
               }}
             />
@@ -100,11 +101,46 @@ const ForgotPasswordPage = connect(mapStateToProps)((props: ForgotPasswordPagePr
               onKeyPress={(event) => {
                 if (event.key === 'Enter' && newPassword && confirmCode) {
                   event.preventDefault();
-                  props.dispatch(forgotPasswordSubmit(username, confirmCode, newPassword));
+                  props.dispatch(forgotPasswordSubmit(props.username, confirmCode, newPassword));
+                  setConfirmCode(undefined);
+                  setNewPassword(undefined);
                 }
               }}
               fullWidth
             />
+            <Grid
+              container
+              direction='row'
+              justify='center'
+              alignItems='center'
+              spacing={6}
+              className={classes.forgotPasswordGrid}
+            >
+              <Grid item>
+                <Button
+                  variant='contained'
+                  color='primary'
+                  onClick={(event) => {
+                    event.preventDefault();
+                    props.dispatch(forgotPasswordSubmit(props.username, confirmCode, newPassword));
+                    setConfirmCode(undefined);
+                    setNewPassword(undefined);
+                  }}
+                >
+                  Reset password
+                </Button>
+              </Grid>
+              <Grid item>
+                <MuiLink
+                  component={Link}
+                  to='/login'
+                  variant='body1'
+                  onClick={() => { props.dispatch(backToLogin()) }}
+                >
+                  Back to login
+                </MuiLink>
+              </Grid>
+            </Grid>
           </Grid>
         </React.Fragment>
       )}
@@ -161,6 +197,7 @@ const ForgotPasswordPage = connect(mapStateToProps)((props: ForgotPasswordPagePr
                 if (event.key === 'Enter' && username) {
                   event.preventDefault();
                   props.dispatch(forgotPassword(username));
+                  setUsername(undefined);
                 }
               }}
             />
@@ -179,6 +216,7 @@ const ForgotPasswordPage = connect(mapStateToProps)((props: ForgotPasswordPagePr
                   onClick={(event) => {
                     event.preventDefault();
                     props.dispatch(forgotPassword(username));
+                    setUsername(undefined);
                   }}
                 >
                   Proceed with request
@@ -189,7 +227,7 @@ const ForgotPasswordPage = connect(mapStateToProps)((props: ForgotPasswordPagePr
                   component={Link}
                   to='/login'
                   variant='body1'
-                  onClick={() => {props.dispatch(backToLogin())}}
+                  onClick={() => { props.dispatch(backToLogin()) }}
                 >
                   Back to login
                 </MuiLink>

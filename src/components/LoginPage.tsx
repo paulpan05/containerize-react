@@ -97,6 +97,7 @@ const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
                   props.dispatch(signupRequestComplete(username, 'Email'));
                   props.dispatch(resendSignupVerification(username));
                   props.dispatch(redirectToSignup());
+                  setUsername(undefined);
                 }
               }}
             />
@@ -118,6 +119,7 @@ const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
                     props.dispatch(signupRequestComplete(username, 'Email'));
                     props.dispatch(resendSignupVerification(username));
                     props.dispatch(redirectToSignup());
+                    setUsername(undefined);
                   }}
                 >
                   Go confirm account
@@ -177,6 +179,7 @@ const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
                 if (event.key === 'Enter' && password) {
                   event.preventDefault();
                   props.dispatch(loginPasswordReset(props.user, password));
+                  setPassword(undefined);
                 }
               }}
               fullWidth
@@ -196,6 +199,7 @@ const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
                   onClick={(event) => {
                     event.preventDefault();
                     props.dispatch(loginPasswordReset(props.user, password));
+                    setPassword(undefined);
                   }}
                 >
                   Change Password
@@ -288,6 +292,8 @@ const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
                 if (event.key === 'Enter' && id && password) {
                   event.preventDefault();
                   props.dispatch(login(id, password));
+                  setId(undefined);
+                  setPassword(undefined);
                 }
               }}
               fullWidth
@@ -304,6 +310,8 @@ const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
                 if (event.key === 'Enter' && id && password) {
                   event.preventDefault();
                   props.dispatch(login(id, password));
+                  setId(undefined);
+                  setPassword(undefined);
                 }
               }}
               fullWidth
@@ -323,6 +331,8 @@ const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
                   onClick={(event) => {
                     event.preventDefault();
                     props.dispatch(login(id, password));
+                    setId(undefined);
+                    setPassword(undefined);
                   }}
                 >
                   Log in
@@ -333,7 +343,7 @@ const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
                   component={Link}
                   to='/forgot-password'
                   variant='body1'
-                  onClick={() => {props.dispatch(resetForgotPasswordLoginRedirect())}}
+                  onClick={() => { props.dispatch(resetForgotPasswordLoginRedirect()) }}
                 >
                   Forgot password?
                 </MuiLink>

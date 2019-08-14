@@ -48,6 +48,7 @@ export interface ForgotPasswordPageProps {
   forgotPasswordConfirmFailed: boolean
   forgotPasswordConfirmFailedReason: string
   forgotPasswordLoginRedirect: boolean
+  username: string
 }
 
 export const variantIcon = {

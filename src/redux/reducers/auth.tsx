@@ -33,7 +33,8 @@ const initialState: AuthState = {
   forgotPasswordConfirm: false,
   forgotPasswordConfirmFailed: false,
   forgotPasswordConfirmFailedReason: '',
-  forgotPasswordLoginRedirect: false
+  forgotPasswordLoginRedirect: false,
+  username: ''
 }
 
 const auth = (state = initialState, action: AnyAction) => {
@@ -258,7 +259,8 @@ const auth = (state = initialState, action: AnyAction) => {
     case authConstants.FORGOT_PASSWORD_REQUEST_SUCCESS:
       return {
         ...state,
-        forgotPasswordConfirm: true
+        forgotPasswordConfirm: true,
+        username: action.username
       }
     
     case authConstants.FORGOT_PASSWORD_SUBMIT_REQUEST:

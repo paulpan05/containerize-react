@@ -52,15 +52,6 @@ const SignupPage = connect(mapStateToProps)((props: SignupPageProps) => {
     props.dispatch(resetRedirectToSignup());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  React.useEffect(() => {
-    if (props.signupFailed) {
-      setUsername(undefined);
-      setEmail(undefined);
-      setPassword(undefined);
-    } else if (props.verifyFailed) {
-      setConfirmCode(undefined);
-    }
-  }, [props.signupFailed, props.verifyFailed]);
   const classes = signupPageStyles();
   return (
     <Grid
@@ -141,6 +132,7 @@ const SignupPage = connect(mapStateToProps)((props: SignupPageProps) => {
                 if (event.key === 'Enter' && confirmCode) {
                   event.preventDefault();
                   props.dispatch(signupVerification(props.signupConfirmUsername, confirmCode));
+                  setConfirmCode(undefined);
                 }
               }}
             />
@@ -171,6 +163,7 @@ const SignupPage = connect(mapStateToProps)((props: SignupPageProps) => {
                   onClick={(event) => {
                     event.preventDefault();
                     props.dispatch(signupVerification(props.signupConfirmUsername, confirmCode));
+                    setConfirmCode(undefined);
                   }}
                 >
                   Verify signup
@@ -187,7 +180,7 @@ const SignupPage = connect(mapStateToProps)((props: SignupPageProps) => {
                 component={Link}
                 to='/login'
                 variant='body1'
-                onClick={() => {props.dispatch(backToLogin())}}
+                onClick={() => { props.dispatch(backToLogin()) }}
               >
                 Sign up
               </MuiLink>
@@ -256,6 +249,9 @@ const SignupPage = connect(mapStateToProps)((props: SignupPageProps) => {
                 if (event.key === 'Enter' && username && email && password) {
                   event.preventDefault();
                   props.dispatch(signup(username, email, password));
+                  setUsername(undefined);
+                  setEmail(undefined);
+                  setPassword(undefined);
                 }
               }}
             />
@@ -272,6 +268,9 @@ const SignupPage = connect(mapStateToProps)((props: SignupPageProps) => {
                 if (event.key === 'Enter' && username && email && password) {
                   event.preventDefault();
                   props.dispatch(signup(username, email, password));
+                  setUsername(undefined);
+                  setEmail(undefined);
+                  setPassword(undefined);
                 }
               }}
             />
@@ -288,6 +287,9 @@ const SignupPage = connect(mapStateToProps)((props: SignupPageProps) => {
                 if (event.key === 'Enter' && username && email && password) {
                   event.preventDefault();
                   props.dispatch(signup(username, email, password));
+                  setUsername(undefined);
+                  setEmail(undefined);
+                  setPassword(undefined);
                 }
               }}
             />
@@ -303,6 +305,13 @@ const SignupPage = connect(mapStateToProps)((props: SignupPageProps) => {
                 <Button
                   variant='contained'
                   color='primary'
+                  onClick={(event) => {
+                    event.preventDefault();
+                    props.dispatch(signup(username, email, password));
+                    setUsername(undefined);
+                    setEmail(undefined);
+                    setPassword(undefined);
+                  }}
                 >
                   Create new user
                 </Button>
