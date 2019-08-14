@@ -5,13 +5,18 @@ import { Auth } from 'aws-amplify';
 import { loginSuccess } from '../redux/actions/auth';
 import { connect } from 'react-redux';
 import { AppProps } from '../types/components';
+import { loadingPage, loadingPageFinished } from '../redux/actions/pageload';
 
 const App = connect()((props: AppProps) => {
   React.useEffect(() => {
+    props.dispatch(loadingPage());
     Auth.currentAuthenticatedUser()
       .then((user) => {
         props.dispatch(loginSuccess(user));
-      }).catch();
+        props.dispatch(loadingPageFinished());
+      }).catch(() => {
+        props.dispatch(loadingPageFinished());
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (

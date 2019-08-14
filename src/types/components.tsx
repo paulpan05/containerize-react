@@ -14,9 +14,9 @@ export interface LoginPageProps {
   loginFailedReason: string
   passwordResetFailed: boolean
   passwordResetFailedReason: string
-  user?: CognitoUser,
-  signedUp: boolean,
-  getUsernameToConfirm: boolean,
+  user?: CognitoUser
+  signedUp: boolean
+  getUsernameToConfirm: boolean
   redirectToSignup: boolean
   forgotPasswordLoginRedirect: boolean
 }

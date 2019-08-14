@@ -6,17 +6,20 @@ import { RootRouteProps } from '../types/routes';
 
 const mapStateToProps = (state: RootState) => {
   return {
-    loggedIn: state.auth.loggedIn
+    loggedIn: state.auth.loggedIn,
+    pageLoading: state.pageload.pageLoading
   }
 }
 
 const RootRoute = connect(mapStateToProps)((props: RootRouteProps) => {
   return (
     <Route exact path='/' render={() => (
-      props.loggedIn ?
-        (<Redirect to='/console' />) :
-        (<Redirect to='/login' />)
-    )} />
+      props.pageLoading ? (
+        props.loggedIn ?
+          (<Redirect to='/console' />) :
+          (<Redirect to='/login' />)
+      ) : (<React.Fragment />))}
+    />
   );
 })
 

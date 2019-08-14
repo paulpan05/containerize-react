@@ -6,6 +6,7 @@ export type ThunkActionCreatorPreset = ActionCreator<ThunkAction<void, {}, {}, A
 export type ThunkDispatchPreset = ThunkDispatch<{}, {}, AnyAction>;
 export interface RootState {
   auth: AuthState
+  pageload: PageloadState
 }
 export interface AuthState {
   loggingIn: boolean
@@ -40,4 +41,8 @@ export interface AuthState {
   forgotPasswordConfirmFailedReason: string
   forgotPasswordLoginRedirect: boolean
   username: string
+}
+
+export interface PageloadState {
+  pageLoading: boolean
 }
