@@ -66,7 +66,7 @@ const SignupPage = connect(mapStateToProps)((props: SignupPageProps) => {
         <img src={logo} alt='logo' className={classes.logo} />
       </Grid>
       {props.loggedIn && (
-        <Redirect to='/' />
+        <Redirect to='/main' />
       )}
       {props.signedUp && (
         <Redirect to='/login' />
