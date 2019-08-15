@@ -13,7 +13,7 @@ const App = connect()((props: AppProps) => {
       .then((user: CognitoUser) => {
         props.dispatch(setUsername(user.getUsername()));
         props.dispatch(loginSuccess(user));
-      }).catch();
+      }).catch(() => {});
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (

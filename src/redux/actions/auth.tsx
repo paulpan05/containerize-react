@@ -260,6 +260,7 @@ const loginPasswordReset: ThunkActionCreatorPreset = (user: any, newPassword: an
       if (loggedUser.challengeName) {
         handleAuthChallenge(loggedUser, dispatch);
       } else {
+        dispatch(setUsername((loggedUser as CognitoUser).getUsername()));
         dispatch(loginSuccess(loggedUser as CognitoUser));
       }
     } catch (error) {
@@ -280,6 +281,7 @@ const login: ThunkActionCreatorPreset = (id: string, password: string) => {
       if (user.challengeName) {
         handleAuthChallenge(user, dispatch);
       } else {
+        dispatch(setUsername((user as CognitoUser).getUsername()));
         dispatch(loginSuccess(user as CognitoUser));
       }
     } catch (error) {
