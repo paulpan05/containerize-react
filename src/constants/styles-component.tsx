@@ -111,9 +111,30 @@ const alertSnackbarStyles = makeStyles((theme: Theme) =>
   })
 );
 
+const mainPageStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    mainDiv: {
+      display: 'flex',
+      flexFlow: 'column',
+      minHeight: '100vh'
+    }
+  })
+);
+
+const dashboardStyles = makeStyles((theme: Theme) => 
+  createStyles({
+    pageGrid: {
+      verticalAlign: 'middle',
+      flexGrow: 1
+    }
+  })
+);
+
 export {
   loginPageStyles,
   signupPageStyles,
   forgotPasswordPageStyles,
-  alertSnackbarStyles
+  alertSnackbarStyles,
+  mainPageStyles,
+  dashboardStyles
 };

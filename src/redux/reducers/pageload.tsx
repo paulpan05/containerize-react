@@ -3,7 +3,8 @@ import { AnyAction } from "redux";
 import { pageloadConstants } from "../constants/pageload";
 
 const initialState: PageloadState = {
-  pageLoading: true
+  pageLoading: true,
+  previousPageRoute: '/main'
 }
 
 const pageload = (state = initialState, action: AnyAction) => {
@@ -17,6 +18,11 @@ const pageload = (state = initialState, action: AnyAction) => {
       return {
         ...state,
         pageLoading: false
+      }
+    case pageloadConstants.SET_PREVIOUS_PAGE_ROUTE:
+      return {
+        ...state,
+        previousPageRoute: action.route
       }
     default:
       return state;

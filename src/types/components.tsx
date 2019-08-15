@@ -57,6 +57,16 @@ export interface AppProps {
   dispatch: Dispatch<any>
 }
 
+export interface MainPageProps {
+  dispatch: Dispatch<any>
+  loggedIn: boolean
+  innerComponent: any
+}
+
+export interface DashboardProps {
+  dispatch: Dispatch<any>
+}
+
 export const variantIcon = {
   success: CheckCircleIcon,
   warning: WarningIcon,

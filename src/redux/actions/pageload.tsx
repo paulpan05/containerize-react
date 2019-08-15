@@ -12,7 +12,15 @@ const loadingPageFinished = () => {
   }
 }
 
+const setPreviousRoute = (route: string) => {
+  return {
+    type: pageloadConstants.SET_PREVIOUS_PAGE_ROUTE,
+    route
+  }
+}
+
 export {
   loadingPage,
-  loadingPageFinished
+  loadingPageFinished,
+  setPreviousRoute
 }

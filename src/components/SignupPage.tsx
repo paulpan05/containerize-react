@@ -55,294 +55,299 @@ const SignupPage = connect(mapStateToProps)((props: SignupPageProps) => {
   }, []);
   const classes = signupPageStyles();
   return (
-    <Grid
-      container
-      direction='column'
-      justify='center'
-      alignItems='center'
-      className={classes.pageGrid}
-    >
-      <Grid item>
-        <img src={logo} alt='logo' className={classes.logo} />
-      </Grid>
+    <React.Fragment>
       {props.loggedIn && (
-        <Redirect to='/main' />
+        <Redirect to='/' />
       )}
       {props.signedUp && (
         <Redirect to='/login' />
       )}
-      {props.signupConfirm && !props.resendingSignup && !props.verifyingSignup && (
-        <React.Fragment>
+      {!props.loggedIn && !props.signedUp && (
+
+        <Grid
+          container
+          direction='column'
+          justify='center'
+          alignItems='center'
+          className={classes.pageGrid}
+        >
           <Grid item>
-            <Typography
-              align='center'
-              variant='h5'
-              gutterBottom
-            >
-              Confirmation code has been send via {props.signupConfirmMedium}. Please
-              enter code to confirm sign-up.
-            </Typography>
+            <img src={logo} alt='logo' className={classes.logo} />
           </Grid>
-          <Grid
-            container
-            item={true}
-            className={classes.innerGrid}
-          >
-            {props.resendSuccess && (
-              <AlertSnackbar
-                variant='success'
-                onClose={() => {
-                  props.dispatch(
-                    resendSignupSuccessReset()
-                  );
-                }}
-                className={classes.snackbarMargin}
-                message='Code has been resent'
-              />
-            )}
-            {props.resendFailed && (
-              <AlertSnackbar
-                variant='error'
-                onClose={() => {
-                  props.dispatch(
-                    resendSignupFailureReset()
-                  );
-                }}
-                className={classes.snackbarMargin}
-                message={props.resendFailedReason}
-              />
-            )}
-            {props.verifyFailed && (
-              <AlertSnackbar
-                variant='error'
-                onClose={() => {
-                  props.dispatch(
-                    signupVerificationFailureReset()
-                  );
-                }}
-                className={classes.snackbarMargin}
-                message={props.verifyFailedReason}
-              />
-            )}
-            <TextField
-              label='Confirmation code'
-              type='text'
-              name='confirmcode'
-              margin='normal'
-              variant='outlined'
-              fullWidth
-              onChange={(event) => { setConfirmCode(event.target.value) }}
-              onKeyPress={(event) => {
-                if (event.key === 'Enter' && confirmCode) {
-                  event.preventDefault();
-                  props.dispatch(signupVerification(props.signupConfirmUsername, confirmCode));
-                  setConfirmCode(undefined);
-                }
-              }}
-            />
-            <Grid
-              container
-              direction='row'
-              justify='center'
-              alignItems='center'
-              spacing={6}
-              className={classes.confirmGrid}
-            >
+          {props.signupConfirm && !props.resendingSignup && !props.verifyingSignup && (
+            <React.Fragment>
               <Grid item>
-                <Button
-                  variant='contained'
-                  color='primary'
-                  onClick={(event) => {
-                    event.preventDefault();
-                    props.dispatch(resendSignupVerification(props.signupConfirmUsername));
-                  }}
+                <Typography
+                  align='center'
+                  variant='h5'
+                  gutterBottom
                 >
-                  Resend verification code
-                </Button>
+                  Confirmation code has been send via {props.signupConfirmMedium}. Please
+                  enter code to confirm sign-up.
+                </Typography>
               </Grid>
-              <Grid item>
-                <Button
-                  variant='contained'
-                  color='primary'
-                  onClick={(event) => {
-                    event.preventDefault();
-                    props.dispatch(signupVerification(props.signupConfirmUsername, confirmCode));
-                    setConfirmCode(undefined);
-                  }}
-                >
-                  Verify signup
-                </Button>
-              </Grid>
-            </Grid>
-            <Grid
-              container
-              direction='row'
-              justify='center'
-              className={classes.confirmGoBackGrid}
-            >
-              <MuiLink
-                component={Link}
-                to='/login'
-                variant='body1'
-                onClick={() => { props.dispatch(backToLogin()) }}
+              <Grid
+                container
+                item={true}
+                className={classes.innerGrid}
               >
-                Back to login
-              </MuiLink>
-            </Grid>
-          </Grid>
-        </React.Fragment>
-      )}
-      {props.signingUp && (
-        <Grid item>
-          <Typography align='center' variant='h4'>
-            Signing up
-            </Typography>
-        </Grid>
-      )}
-      {props.resendingSignup && (
-        <Grid item>
-          <Typography align='center' variant='h4'>
-            Resending code
-            </Typography>
-        </Grid>
-      )}
-      {props.verifyingSignup && (
-        <Grid item>
-          <Typography align='center' variant='h4'>
-            Verifying signup
-            </Typography>
-        </Grid>
-      )}
-      {(props.signingUp || props.resendingSignup || props.verifyingSignup) && (
-        <Grid item>
-          <CircularProgress size='10em' className={classes.loadProgress} />
-        </Grid>
-      )}
-      {!props.signingUp && !props.signupConfirm && (
-        <React.Fragment>
-          <Grid item>
-            <Typography
-              align='center'
-              variant='h5'
-              gutterBottom
-            >
-              Create a new account
-            </Typography>
-          </Grid>
-          <Grid
-            container
-            item={true}
-            className={classes.innerGrid}
-          >
-            {props.signupFailed && (
-              <AlertSnackbar
-                variant='error'
-                onClose={() => {
-                  props.dispatch(
-                    signupFailureReset()
-                  );
-                }}
-                className={classes.snackbarMargin}
-                message={props.signupFailedReason}
-              />
-            )}
-            <TextField
-              label='Username'
-              type='text'
-              name='username'
-              autoComplete='username'
-              margin='normal'
-              variant='outlined'
-              fullWidth
-              onChange={(event) => { setUsername(event.target.value) }}
-              onKeyPress={(event) => {
-                if (event.key === 'Enter' && username && email && password) {
-                  event.preventDefault();
-                  props.dispatch(signup(username, email, password));
-                  setUsername(undefined);
-                  setEmail(undefined);
-                  setPassword(undefined);
-                }
-              }}
-            />
-            <TextField
-              label='Email'
-              type='email'
-              name='email'
-              autoComplete='email'
-              margin='normal'
-              variant='outlined'
-              fullWidth
-              onChange={(event) => { setEmail(event.target.value) }}
-              onKeyPress={(event) => {
-                if (event.key === 'Enter' && username && email && password) {
-                  event.preventDefault();
-                  props.dispatch(signup(username, email, password));
-                  setUsername(undefined);
-                  setEmail(undefined);
-                  setPassword(undefined);
-                }
-              }}
-            />
-            <TextField
-              label='Password'
-              type='password'
-              name='password'
-              autoComplete='current-password'
-              margin='normal'
-              variant='outlined'
-              fullWidth
-              onChange={(event) => { setPassword(event.target.value) }}
-              onKeyPress={(event) => {
-                if (event.key === 'Enter' && username && email && password) {
-                  event.preventDefault();
-                  props.dispatch(signup(username, email, password));
-                  setUsername(undefined);
-                  setEmail(undefined);
-                  setPassword(undefined);
-                }
-              }}
-            />
-            <Grid
-              container
-              direction='row'
-              justify='center'
-              alignItems='center'
-              spacing={6}
-              className={classes.createUserGrid}
-            >
-              <Grid item>
-                <Button
-                  variant='contained'
-                  color='primary'
-                  onClick={(event) => {
-                    event.preventDefault();
-                    props.dispatch(signup(username, email, password));
-                    setUsername(undefined);
-                    setEmail(undefined);
-                    setPassword(undefined);
+                {props.resendSuccess && (
+                  <AlertSnackbar
+                    variant='success'
+                    onClose={() => {
+                      props.dispatch(
+                        resendSignupSuccessReset()
+                      );
+                    }}
+                    className={classes.snackbarMargin}
+                    message='Code has been resent'
+                  />
+                )}
+                {props.resendFailed && (
+                  <AlertSnackbar
+                    variant='error'
+                    onClose={() => {
+                      props.dispatch(
+                        resendSignupFailureReset()
+                      );
+                    }}
+                    className={classes.snackbarMargin}
+                    message={props.resendFailedReason}
+                  />
+                )}
+                {props.verifyFailed && (
+                  <AlertSnackbar
+                    variant='error'
+                    onClose={() => {
+                      props.dispatch(
+                        signupVerificationFailureReset()
+                      );
+                    }}
+                    className={classes.snackbarMargin}
+                    message={props.verifyFailedReason}
+                  />
+                )}
+                <TextField
+                  label='Confirmation code'
+                  type='text'
+                  name='confirmcode'
+                  margin='normal'
+                  variant='outlined'
+                  fullWidth
+                  onChange={(event) => { setConfirmCode(event.target.value) }}
+                  onKeyPress={(event) => {
+                    if (event.key === 'Enter' && confirmCode) {
+                      event.preventDefault();
+                      props.dispatch(signupVerification(props.signupConfirmUsername, confirmCode));
+                      setConfirmCode(undefined);
+                    }
                   }}
+                />
+                <Grid
+                  container
+                  direction='row'
+                  justify='center'
+                  alignItems='center'
+                  spacing={6}
+                  className={classes.confirmGrid}
                 >
-                  Create new user
-                </Button>
-              </Grid>
-              <Grid item>
-                <MuiLink
-                  component={Link}
-                  to='/login'
-                  variant='body1'
-                  onClick={() => {
-                    props.dispatch(backToLogin());
-                  }}
+                  <Grid item>
+                    <Button
+                      variant='contained'
+                      color='primary'
+                      onClick={(event) => {
+                        event.preventDefault();
+                        props.dispatch(resendSignupVerification(props.signupConfirmUsername));
+                      }}
+                    >
+                      Resend verification code
+                    </Button>
+                  </Grid>
+                  <Grid item>
+                    <Button
+                      variant='contained'
+                      color='primary'
+                      onClick={(event) => {
+                        event.preventDefault();
+                        props.dispatch(signupVerification(props.signupConfirmUsername, confirmCode));
+                        setConfirmCode(undefined);
+                      }}
+                    >
+                      Verify signup
+                    </Button>
+                  </Grid>
+                </Grid>
+                <Grid
+                  container
+                  direction='row'
+                  justify='center'
+                  className={classes.confirmGoBackGrid}
                 >
-                  Back to log in
-                </MuiLink>
+                  <MuiLink
+                    component={Link}
+                    to='/login'
+                    variant='body1'
+                    onClick={() => { props.dispatch(backToLogin()) }}
+                  >
+                    Back to login
+                  </MuiLink>
+                </Grid>
               </Grid>
+            </React.Fragment>
+          )}
+          {props.signingUp && (
+            <Grid item>
+              <Typography align='center' variant='h4'>
+                Signing up
+              </Typography>
             </Grid>
-          </Grid>
-        </React.Fragment>
+          )}
+          {props.resendingSignup && (
+            <Grid item>
+              <Typography align='center' variant='h4'>
+                Resending code
+              </Typography>
+            </Grid>
+          )}
+          {props.verifyingSignup && (
+            <Grid item>
+              <Typography align='center' variant='h4'>
+                Verifying signup
+              </Typography>
+            </Grid>
+          )}
+          {(props.signingUp || props.resendingSignup || props.verifyingSignup) && (
+            <Grid item>
+              <CircularProgress size='10em' className={classes.loadProgress} />
+            </Grid>
+          )}
+          {!props.signingUp && !props.signupConfirm && (
+            <React.Fragment>
+              <Grid item>
+                <Typography
+                  align='center'
+                  variant='h5'
+                  gutterBottom
+                >
+                  Create a new account
+                </Typography>
+              </Grid>
+              <Grid
+                container
+                item={true}
+                className={classes.innerGrid}
+              >
+                {props.signupFailed && (
+                  <AlertSnackbar
+                    variant='error'
+                    onClose={() => {
+                      props.dispatch(
+                        signupFailureReset()
+                      );
+                    }}
+                    className={classes.snackbarMargin}
+                    message={props.signupFailedReason}
+                  />
+                )}
+                <TextField
+                  label='Username'
+                  type='text'
+                  name='username'
+                  autoComplete='username'
+                  margin='normal'
+                  variant='outlined'
+                  fullWidth
+                  onChange={(event) => { setUsername(event.target.value) }}
+                  onKeyPress={(event) => {
+                    if (event.key === 'Enter' && username && email && password) {
+                      event.preventDefault();
+                      props.dispatch(signup(username, email, password));
+                      setUsername(undefined);
+                      setEmail(undefined);
+                      setPassword(undefined);
+                    }
+                  }}
+                />
+                <TextField
+                  label='Email'
+                  type='email'
+                  name='email'
+                  autoComplete='email'
+                  margin='normal'
+                  variant='outlined'
+                  fullWidth
+                  onChange={(event) => { setEmail(event.target.value) }}
+                  onKeyPress={(event) => {
+                    if (event.key === 'Enter' && username && email && password) {
+                      event.preventDefault();
+                      props.dispatch(signup(username, email, password));
+                      setUsername(undefined);
+                      setEmail(undefined);
+                      setPassword(undefined);
+                    }
+                  }}
+                />
+                <TextField
+                  label='Password'
+                  type='password'
+                  name='password'
+                  autoComplete='current-password'
+                  margin='normal'
+                  variant='outlined'
+                  fullWidth
+                  onChange={(event) => { setPassword(event.target.value) }}
+                  onKeyPress={(event) => {
+                    if (event.key === 'Enter' && username && email && password) {
+                      event.preventDefault();
+                      props.dispatch(signup(username, email, password));
+                      setUsername(undefined);
+                      setEmail(undefined);
+                      setPassword(undefined);
+                    }
+                  }}
+                />
+                <Grid
+                  container
+                  direction='row'
+                  justify='center'
+                  alignItems='center'
+                  spacing={6}
+                  className={classes.createUserGrid}
+                >
+                  <Grid item>
+                    <Button
+                      variant='contained'
+                      color='primary'
+                      onClick={(event) => {
+                        event.preventDefault();
+                        props.dispatch(signup(username, email, password));
+                        setUsername(undefined);
+                        setEmail(undefined);
+                        setPassword(undefined);
+                      }}
+                    >
+                      Create new user
+                    </Button>
+                  </Grid>
+                  <Grid item>
+                    <MuiLink
+                      component={Link}
+                      to='/login'
+                      variant='body1'
+                      onClick={() => {
+                        props.dispatch(backToLogin());
+                      }}
+                    >
+                      Back to log in
+                    </MuiLink>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </React.Fragment>
+          )}
+        </Grid>
       )}
-    </Grid>
+    </React.Fragment>
   );
 })
 
