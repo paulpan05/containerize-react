@@ -1,4 +1,5 @@
 import React from 'react';
+import MainRoutes from '../routes/MainRoutes';
 import AuthRoutes from '../routes/AuthRoutes';
 import RootRoute from '../routes/RootRoute';
 import { Auth } from 'aws-amplify';
@@ -6,9 +7,6 @@ import { loginSuccess } from '../redux/actions/auth';
 import { connect } from 'react-redux';
 import { AppProps } from '../types/components';
 import { loadingPage, loadingPageFinished } from '../redux/actions/pageload';
-import { Route } from 'react-router-dom';
-import MainPage from './MainPage';
-import Dashboard from './Dashboard';
 
 const App = connect()((props: AppProps) => {
   React.useEffect(() => {
@@ -26,9 +24,7 @@ const App = connect()((props: AppProps) => {
     <React.Fragment>
       <RootRoute />
       <AuthRoutes />
-      <Route path='/main'
-        render={() => (<MainPage innerComponent={<Dashboard/>} />)}
-      />
+      <MainRoutes />
     </React.Fragment>
   );
 })

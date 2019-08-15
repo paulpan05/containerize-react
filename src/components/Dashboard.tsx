@@ -7,7 +7,7 @@ import { DashboardProps } from '../types/components';
 
 const Dashboard = connect()((props: DashboardProps) => {
   React.useEffect(() => {
-    props.dispatch(setPreviousRoute('/main'));
+    props.dispatch(setPreviousRoute('/dashboard'));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const classes = dashboardStyles();
