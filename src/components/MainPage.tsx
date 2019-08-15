@@ -23,7 +23,7 @@ const MainPage = connect(mapsStateToProps)((props: MainPageProps) => {
       {props.signoutWarn && (
         <SignedOut />
       )}
-      {!props.loggedIn && !props.signoutWarn && (
+      {!props.loggedIn && (
         <Redirect to='/' />
       )}
       {props.loggedIn && !props.signoutWarn && (

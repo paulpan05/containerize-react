@@ -30,7 +30,10 @@ const persistedState = loadStateFromStorage();
 const rootStore = createStore(
   rootReducer,
   persistedState,
-  composeWithDevTools(applyMiddleware(thunk)));
+  composeWithDevTools(
+    applyMiddleware(thunk)
+  )
+);
 
 rootStore.subscribe(() => {saveStateToStorage(rootStore.getState())})
 
