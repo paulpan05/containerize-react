@@ -16,10 +16,9 @@ const loginNewPassword = (user: any) => {
   }
 }
 
-const loginSuccess = (user: CognitoUser) => {
+const loginSuccess = () => {
   return {
-    type: authConstants.LOGIN_SUCCESS,
-    user
+    type: authConstants.LOGIN_SUCCESS
   }
 }
 
@@ -239,6 +238,24 @@ const setUsername = (username: string) => {
   }
 }
 
+const pageloadLoggedIn = () => {
+  return {
+    type: authConstants.PAGE_LOAD_LOGGED_IN
+  }
+}
+
+const pageloadNotLoggedIn = () => {
+  return {
+    type: authConstants.PAGE_LOAD_NOT_LOGGED_IN
+  }
+}
+
+const signoutWarn = () => {
+  return {
+    type: authConstants.SIGNOUT_WARN
+  }
+}
+
 const handleAuthChallenge = (user: any, dispatch: ThunkDispatchPreset) => {
   switch (user.challengeName) {
     case 'NEW_PASSWORD_REQUIRED':
@@ -261,7 +278,7 @@ const loginPasswordReset: ThunkActionCreatorPreset = (user: any, newPassword: an
         handleAuthChallenge(loggedUser, dispatch);
       } else {
         dispatch(setUsername((loggedUser as CognitoUser).getUsername()));
-        dispatch(loginSuccess(loggedUser as CognitoUser));
+        dispatch(loginSuccess());
       }
     } catch (error) {
       if (error.message) {
@@ -282,7 +299,7 @@ const login: ThunkActionCreatorPreset = (id: string, password: string) => {
         handleAuthChallenge(user, dispatch);
       } else {
         dispatch(setUsername((user as CognitoUser).getUsername()));
-        dispatch(loginSuccess(user as CognitoUser));
+        dispatch(loginSuccess());
       }
     } catch (error) {
       if (error.code === 'UserNotConfirmedException') {
@@ -418,5 +435,8 @@ export {
   resetForgotPasswordLoginRedirect,
   resetForgotPasswordRequestFailure,
   resetForgotPasswordSubmitRequestFailure,
-  setUsername
+  setUsername,
+  pageloadLoggedIn,
+  pageloadNotLoggedIn,
+  signoutWarn
 };

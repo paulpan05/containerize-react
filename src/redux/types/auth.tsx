@@ -32,4 +32,5 @@ export interface AuthState {
   forgotPasswordConfirmFailedReason: string
   forgotPasswordLoginRedirect: boolean
   username: string
+  signoutWarn: boolean
 }

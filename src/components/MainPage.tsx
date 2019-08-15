@@ -7,10 +7,12 @@ import { Redirect, Route } from 'react-router';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Dashboard from './Dashboard';
+import SignedOut from './SignedOut';
 
 const mapsStateToProps = (state: RootState) => {
   return {
-    loggedIn: state.auth.loggedIn
+    loggedIn: state.auth.loggedIn,
+    signoutWarn: state.auth.signoutWarn
   }
 }
 
@@ -18,10 +20,13 @@ const MainPage = connect(mapsStateToProps)((props: MainPageProps) => {
   const classes = mainPageStyles();
   return (
     <React.Fragment>
-      {!props.loggedIn && (
+      {props.signoutWarn && (
+        <SignedOut />
+      )}
+      {!props.loggedIn && !props.signoutWarn && (
         <Redirect to='/' />
       )}
-      {props.loggedIn && (
+      {props.loggedIn && !props.signoutWarn && (
         <div className={classes.mainDiv}>
           <AppBar position='static'>
             <Toolbar></Toolbar>

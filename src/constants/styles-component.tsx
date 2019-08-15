@@ -130,11 +130,24 @@ const dashboardStyles = makeStyles((theme: Theme) =>
   })
 );
 
+const signedOutStyles = makeStyles((theme: Theme) => 
+  createStyles({
+    pageGrid: {
+      minHeight: '100vh',
+      verticalAlign: 'middle'
+    },
+    signedOutButton: {
+      marginTop: '1em'
+    }
+  })
+);
+
 export {
   loginPageStyles,
   signupPageStyles,
   forgotPasswordPageStyles,
   alertSnackbarStyles,
   mainPageStyles,
-  dashboardStyles
+  dashboardStyles,
+  signedOutStyles
 };

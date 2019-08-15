@@ -56,16 +56,22 @@ export interface ForgotPasswordPageProps {
 
 export interface AppProps {
   dispatch: Dispatch<any>
+  loggedIn: boolean
 }
 
 export interface MainPageProps extends RouteComponentProps {
   dispatch: Dispatch<any>
   loggedIn: boolean
+  signoutWarn: boolean
 }
 
 export interface DashboardProps {
   dispatch: Dispatch<any>
   username: string
+}
+
+export interface SignedOutProps {
+  dispatch: Dispatch<any>
 }
 
 export const variantIcon = {

@@ -33,7 +33,8 @@ const initialState: AuthState = {
   forgotPasswordConfirmFailed: false,
   forgotPasswordConfirmFailedReason: '',
   forgotPasswordLoginRedirect: false,
-  username: ''
+  username: '',
+  signoutWarn: false
 }
 
 const auth = (state = initialState, action: AnyAction) => {
@@ -70,7 +71,7 @@ const auth = (state = initialState, action: AnyAction) => {
       return {
         ...state,
         loggedIn: true,
-        user: action.user
+        user: undefined
       };
 
     case authConstants.GET_USERNAME_TO_CONFIRM:
@@ -78,14 +79,14 @@ const auth = (state = initialState, action: AnyAction) => {
         ...state,
         getUsernameToConfirm: true
       }
-    
+
     case authConstants.PASSWORD_RESET_REQUEST:
       return {
         ...state,
         loginNewPassword: false,
         passwordResetFailed: false
       }
-    
+
     case authConstants.PASSWORD_RESET_FAILURE:
       return {
         ...state,
@@ -93,13 +94,13 @@ const auth = (state = initialState, action: AnyAction) => {
         passwordResetFailed: true,
         passwordResetFailedReason: action.reason
       }
-    
+
     case authConstants.PASSWORD_RESET_FAILURE_RESET:
       return {
         ...state,
         passwordResetFailed: false
       }
-    
+
     case authConstants.BACK_TO_LOGIN:
       return {
         ...state,
@@ -122,13 +123,13 @@ const auth = (state = initialState, action: AnyAction) => {
         forgotPasswordConfirmFailed: false,
         forgotPasswordFailed: false
       }
-    
+
     case authConstants.SIGNUP_REQUEST:
       return {
         ...state,
         signingUp: true
       }
-    
+
     case authConstants.SIGNUP_FAILURE:
       return {
         ...state,
@@ -136,7 +137,7 @@ const auth = (state = initialState, action: AnyAction) => {
         signupFailed: true,
         signupFailedReason: action.reason
       }
-    
+
     case authConstants.SIGNUP_REQUEST_COMPLETE:
       return {
         ...state,
@@ -145,7 +146,7 @@ const auth = (state = initialState, action: AnyAction) => {
         signupConfirmMedium: action.deliveryMedium,
         username: action.username
       }
-    
+
     case authConstants.RESEND_SIGNUP_REQUEST:
       return {
         ...state,
@@ -160,7 +161,7 @@ const auth = (state = initialState, action: AnyAction) => {
         resendingSignup: false,
         resendSuccess: true
       }
-    
+
     case authConstants.RESEND_SIGNUP_FAILURE:
       return {
         ...state,
@@ -191,25 +192,25 @@ const auth = (state = initialState, action: AnyAction) => {
         signupConfirm: false,
         signedUp: true
       }
-    
+
     case authConstants.SIGNUP_FAILURE_RESET:
       return {
         ...state,
         signupFailed: false
       }
-    
+
     case authConstants.RESEND_SIGNUP_FAILURE_RESET:
       return {
         ...state,
         resendFailed: false
       }
-    
+
     case authConstants.RESEND_SIGNUP_SUCCESS_RESET:
       return {
         ...state,
         resendSuccess: false
       }
-    
+
     case authConstants.SIGNUP_VERIFICATION_FAILURE_RESET:
       return {
         ...state,
@@ -227,7 +228,7 @@ const auth = (state = initialState, action: AnyAction) => {
         ...state,
         username: action.username
       }
-    
+
     case authConstants.REDIRECT_TO_SIGNUP:
       return {
         ...state,
@@ -239,7 +240,7 @@ const auth = (state = initialState, action: AnyAction) => {
         ...state,
         redirectToSignup: false
       }
-    
+
     case authConstants.FORGOT_PASSWORD_REQUEST:
       return {
         ...state,
@@ -261,14 +262,14 @@ const auth = (state = initialState, action: AnyAction) => {
         forgotPasswordConfirm: true,
         username: action.username
       }
-    
+
     case authConstants.FORGOT_PASSWORD_SUBMIT_REQUEST:
       return {
         ...state,
         forgotPasswordConfirm: false,
         forgotPasswordConfirmFailed: false
       }
-    
+
     case authConstants.FORGOT_PASSWORD_SUBMIT_REQUEST_FAILURE:
       return {
         ...state,
@@ -284,13 +285,13 @@ const auth = (state = initialState, action: AnyAction) => {
         forgotPasswordProcessing: false,
         forgotPasswordLoginRedirect: true
       }
-    
+
     case authConstants.RESET_FORGOT_PASSWORD_LOGIN_REDIRECT:
       return {
         ...state,
         forgotPasswordLoginRedirect: false
       }
-    
+
     case authConstants.RESET_FORGOT_PASSWORD_REQUEST_FAILURE:
       return {
         ...state,
@@ -307,6 +308,28 @@ const auth = (state = initialState, action: AnyAction) => {
       return {
         ...state,
         username: action.username
+      }
+
+    case authConstants.PAGE_LOAD_LOGGED_IN:
+      return {
+        ...state,
+        loggedIn: true,
+        user: undefined,
+        signoutWarn: false
+      }
+
+    case authConstants.PAGE_LOAD_NOT_LOGGED_IN:
+      return {
+        ...state,
+        loggedIn: false,
+        user: undefined,
+        signoutWarn: false
+      }
+
+    case authConstants.SIGNOUT_WARN:
+      return {
+        ...state,
+        signoutWarn: true
       }
 
     default:
