@@ -4,6 +4,7 @@ import WarningIcon from '@material-ui/icons/Warning';
 import ErrorIcon from '@material-ui/icons/Error';
 import InfoIcon from '@material-ui/icons/Info';
 import { CognitoUser } from "amazon-cognito-identity-js";
+import { RouteComponentProps } from "react-router";
 
 export interface LoginPageProps {
   dispatch: Dispatch<any>
@@ -57,10 +58,9 @@ export interface AppProps {
   dispatch: Dispatch<any>
 }
 
-export interface MainPageProps {
+export interface MainPageProps extends RouteComponentProps {
   dispatch: Dispatch<any>
   loggedIn: boolean
-  innerComponent: any
 }
 
 export interface DashboardProps {

@@ -4,7 +4,7 @@ import { pageloadConstants } from "../constants/pageload";
 
 const initialState: PageloadState = {
   pageLoading: true,
-  previousPageRoute: '/dashboard'
+  previousPageRoute: '/main/dashboard'
 }
 
 const pageload = (state = initialState, action: AnyAction) => {
