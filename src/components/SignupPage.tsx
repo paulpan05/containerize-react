@@ -32,7 +32,7 @@ const mapStateToProps = (state: RootState) => {
     signupFailedReason: state.auth.signupFailedReason,
     signupConfirm: state.auth.signupConfirm,
     signupConfirmMedium: state.auth.signupConfirmMedium,
-    signupConfirmUsername: state.auth.signupConfirmUsername,
+    username: state.auth.username,
     resendingSignup: state.auth.resendingSignup,
     resendSuccess: state.auth.resendSuccess,
     resendFailed: state.auth.resendFailed,
@@ -138,7 +138,7 @@ const SignupPage = connect(mapStateToProps)((props: SignupPageProps) => {
                   onKeyPress={(event) => {
                     if (event.key === 'Enter' && confirmCode) {
                       event.preventDefault();
-                      props.dispatch(signupVerification(props.signupConfirmUsername, confirmCode));
+                      props.dispatch(signupVerification(props.username, confirmCode));
                       setConfirmCode(undefined);
                     }
                   }}
@@ -157,7 +157,7 @@ const SignupPage = connect(mapStateToProps)((props: SignupPageProps) => {
                       color='primary'
                       onClick={(event) => {
                         event.preventDefault();
-                        props.dispatch(resendSignupVerification(props.signupConfirmUsername));
+                        props.dispatch(resendSignupVerification(props.username));
                       }}
                     >
                       Resend verification code
@@ -169,7 +169,7 @@ const SignupPage = connect(mapStateToProps)((props: SignupPageProps) => {
                       color='primary'
                       onClick={(event) => {
                         event.preventDefault();
-                        props.dispatch(signupVerification(props.signupConfirmUsername, confirmCode));
+                        props.dispatch(signupVerification(props.username, confirmCode));
                         setConfirmCode(undefined);
                       }}
                     >

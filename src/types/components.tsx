@@ -30,7 +30,7 @@ export interface SignupPageProps {
   signupFailedReason: string
   signupConfirm: boolean
   signupConfirmMedium: string
-  signupConfirmUsername: string
+  username: string
   resendingSignup: boolean
   resendSuccess: boolean
   resendFailed: boolean
@@ -65,6 +65,7 @@ export interface MainPageProps extends RouteComponentProps {
 
 export interface DashboardProps {
   dispatch: Dispatch<any>
+  username: string
 }
 
 export const variantIcon = {

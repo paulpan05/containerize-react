@@ -232,6 +232,13 @@ const resetForgotPasswordSubmitRequestFailure = () => {
   }
 }
 
+const setUsername = (username: string) => {
+  return {
+    type: authConstants.SET_USERNAME,
+    username
+  }
+}
+
 const handleAuthChallenge = (user: any, dispatch: ThunkDispatchPreset) => {
   switch (user.challengeName) {
     case 'NEW_PASSWORD_REQUIRED':
@@ -408,5 +415,6 @@ export {
   forgotPasswordSubmit,
   resetForgotPasswordLoginRedirect,
   resetForgotPasswordRequestFailure,
-  resetForgotPasswordSubmitRequestFailure
+  resetForgotPasswordSubmitRequestFailure,
+  setUsername
 };

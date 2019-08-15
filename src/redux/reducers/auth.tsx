@@ -16,7 +16,6 @@ const initialState: AuthState = {
   signupFailedReason: '',
   signupConfirm: false,
   signupConfirmMedium: '',
-  signupConfirmUsername: '',
   resendingSignup: false,
   resendSuccess: false,
   resendFailed: false,
@@ -144,7 +143,7 @@ const auth = (state = initialState, action: AnyAction) => {
         signingUp: false,
         signupConfirm: true,
         signupConfirmMedium: action.deliveryMedium,
-        signupConfirmUsername: action.username
+        username: action.username
       }
     
     case authConstants.RESEND_SIGNUP_REQUEST:
@@ -226,7 +225,7 @@ const auth = (state = initialState, action: AnyAction) => {
     case authConstants.SET_SIGNUP_CONFIRM_USERNAME:
       return {
         ...state,
-        signupConfirmUsername: action.username
+        username: action.username
       }
     
     case authConstants.REDIRECT_TO_SIGNUP:
@@ -302,6 +301,12 @@ const auth = (state = initialState, action: AnyAction) => {
       return {
         ...state,
         forgotPasswordConfirmFailed: false
+      }
+
+    case authConstants.SET_USERNAME:
+      return {
+        ...state,
+        username: action.username
       }
 
     default:
