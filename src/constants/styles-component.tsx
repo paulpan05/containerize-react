@@ -145,7 +145,13 @@ const mainPageStyles = makeStyles((theme: Theme) =>
     },
     content: {
       flexGrow: 1,
-      padding: theme.spacing(3)
+      padding: theme.spacing(3),
+      [theme.breakpoints.up('xs')]: {
+        width: `calc(100vw - 2 * ${theme.spacing(3)}px)`
+      },
+      [theme.breakpoints.up('sm')]: {
+        width: `calc(100vw - ${drawerWidth}px - 2 * ${theme.spacing(3)}px)`
+      }
     },
     drawerTop: {
       height: '1em',
@@ -185,13 +191,7 @@ const markdownDisplayStyles = makeStyles((theme: Theme) =>
       borderWidth: '1px',
       borderRadius: '4px',
       minHeight: '1em',
-      padding: '18.5px 14px',
-      [theme.breakpoints.up('xs')]: {
-        width: `calc(100vw - 2 * ${theme.spacing(3)}px)`
-      },
-      [theme.breakpoints.up('sm')]: {
-        width: `calc(100vw - ${drawerWidth}px - 2 * ${theme.spacing(3)}px)`
-      }
+      padding: '18.5px 14px'
     }
   })
 );
@@ -207,19 +207,6 @@ const markdownPlaygroundStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const markdownTextFieldStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    textfield: {
-      [theme.breakpoints.up('xs')]: {
-        width: `calc(100vw - 2 * ${theme.spacing(3)}px)`
-      },
-      [theme.breakpoints.up('sm')]: {
-        width: `calc(100vw - ${drawerWidth}px - 2 * ${theme.spacing(3)}px)`
-      }
-    },
-  })
-);
-
 export {
   loginPageStyles,
   signupPageStyles,
@@ -229,6 +216,5 @@ export {
   dashboardStyles,
   signedOutStyles,
   markdownPlaygroundStyles,
-  markdownDisplayStyles,
-  markdownTextFieldStyles
+  markdownDisplayStyles
 };

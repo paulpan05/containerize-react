@@ -3,7 +3,7 @@ import { markdownPlaygroundStyles } from '../constants/styles-component';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import MarkdownDisplay from './MarkdownDisplay';
-import MarkdownTextField from './MarkdownTextField';
+import TextField from '@material-ui/core/TextField';
 
 const MarkdownPlayground: React.FC = () => {
   const classes = markdownPlaygroundStyles();
@@ -13,7 +13,11 @@ const MarkdownPlayground: React.FC = () => {
       <Typography variant='h4'>
         Markdown Text
       </Typography>
-      <MarkdownTextField
+      <TextField
+        multiline
+        fullWidth
+        margin='normal'
+        variant='outlined'
         onChange={(event) => {
           setInnerText(event.target.value);
         }}

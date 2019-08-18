@@ -81,10 +81,6 @@ export interface MarkdownDisplayProps {
   innerText: string
 }
 
-export interface MarkdownTextFieldProps {
-  onChange: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => void
-}
-
 export interface AlertSnackbarProps {
   className?: string;
   message?: string;
