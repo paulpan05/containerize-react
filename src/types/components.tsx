@@ -77,6 +77,10 @@ export const variantIcon = {
   info: InfoIcon,
 };
 
+export interface MarkdownDisplayProps {
+  innerText: string
+}
+
 export interface AlertSnackbarProps {
   className?: string;
   message?: string;
