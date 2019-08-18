@@ -28,6 +28,12 @@ import HomeIcon from '@material-ui/icons/Home';
 import LiveTvIcon from '@material-ui/icons/LiveTv';
 import MarkdownPlayground from './MarkdownPlayground';
 import PageNotFound from './PageNotFound';
+import Popper from '@material-ui/core/Popper';
+import Grow from '@material-ui/core/Grow';
+import Paper from '@material-ui/core/Paper';
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import MenuList from '@material-ui/core/MenuList';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const mapsStateToProps = (state: RootState) => {
   return {
@@ -41,9 +47,20 @@ const MainPage = connect(mapsStateToProps)((props: MainPageProps) => {
   const classes = mainPageStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [userMenuOpen, setUserMenuOpen] = React.useState(false);
   const [redirectMode, setRedirectMode] = React.useState();
+  const anchorRef = React.useRef<HTMLButtonElement>(null);
   const handleDrawerToggle = () => {
-    setMobileOpen(!mobileOpen);
+    setMobileOpen(drawerOpened => !drawerOpened);
+  }
+  const handleUserMenuToggle = () => {
+    setUserMenuOpen(prevOpen => !prevOpen);
+  }
+  const handleUserMenuClose = (event: React.MouseEvent<EventTarget>) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target as HTMLElement)) {
+      return;
+    }
+    setUserMenuOpen(false);
   }
   const drawer = (
     <div>
@@ -108,10 +125,12 @@ const MainPage = connect(mapsStateToProps)((props: MainPageProps) => {
               </IconButton>
               <div className={classes.grow} />
               <Button
+                ref={anchorRef}
                 aria-label='account of current user'
-                aria-controls='menu-appbar'
+                aria-controls='user-menu-grow'
                 aria-haspopup={true}
                 color='inherit'
+                onClick={handleUserMenuToggle}
               >
                 <Typography>
                   {props.username}&nbsp;
@@ -120,6 +139,22 @@ const MainPage = connect(mapsStateToProps)((props: MainPageProps) => {
               </Button>
             </Toolbar>
           </AppBar>
+          <Popper open={userMenuOpen} anchorEl={anchorRef.current} keepMounted transition disablePortal>
+            {({ TransitionProps, placement }) => (
+              <Grow
+                {...TransitionProps}
+                style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+              >
+                <Paper id='user-menu-grow'>
+                  <ClickAwayListener onClickAway={handleUserMenuClose}>
+                    <MenuList>
+                      <MenuItem onClick={handleUserMenuClose}>Sign out</MenuItem>
+                    </MenuList>
+                  </ClickAwayListener>
+                </Paper>
+              </Grow>
+            )}
+          </Popper>
           <nav className={classes.drawer} aria-label='containerize menu'>
             <Hidden smUp implementation='css'>
               <Drawer
