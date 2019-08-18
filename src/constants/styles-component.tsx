@@ -185,22 +185,38 @@ const markdownDisplayStyles = makeStyles((theme: Theme) =>
       borderWidth: '1px',
       borderRadius: '4px',
       minHeight: '1em',
-      padding: '18.5px 14px'
+      padding: '18.5px 14px',
+      [theme.breakpoints.up('xs')]: {
+        width: `calc(100vw - 2 * ${theme.spacing(3)}px)`
+      },
+      [theme.breakpoints.up('sm')]: {
+        width: `calc(100vw - ${drawerWidth}px - 2 * ${theme.spacing(3)}px)`
+      }
     }
   })
 );
 
 const markdownPlaygroundStyles = makeStyles((theme: Theme) =>
   createStyles({
-    textfield: {
-      width: '100%'
-    },
     bottomSpacing: {
       height: '1em'
     },
     topSpacing: {
       height: '0.5em'
     }
+  })
+);
+
+const markdownTextFieldStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    textfield: {
+      [theme.breakpoints.up('xs')]: {
+        width: `calc(100vw - 2 * ${theme.spacing(3)}px)`
+      },
+      [theme.breakpoints.up('sm')]: {
+        width: `calc(100vw - ${drawerWidth}px - 2 * ${theme.spacing(3)}px)`
+      }
+    },
   })
 );
 
@@ -213,5 +229,6 @@ export {
   dashboardStyles,
   signedOutStyles,
   markdownPlaygroundStyles,
-  markdownDisplayStyles
+  markdownDisplayStyles,
+  markdownTextFieldStyles
 };

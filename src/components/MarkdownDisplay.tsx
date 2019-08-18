@@ -1,7 +1,6 @@
 import React from 'react';
 import { MarkdownDisplayProps } from '../types/components';
 import { markdownDisplayStyles } from '../constants/styles-component';
-import clsx from 'clsx';
 import hljs from 'highlight.js';
 import ReactMarkdown from 'react-markdown';
 
@@ -16,8 +15,8 @@ const MarkdownDisplay: React.FC<MarkdownDisplayProps> = (props) => {
     updateCodeSyntaxHighlighting();
   })
   return (
-    <div className={clsx(classes.resultHTML, 'markdown-body')}>
-      <ReactMarkdown source={props.innerText} />
+    <div className='markdown-body'>
+      <ReactMarkdown source={props.innerText} className={classes.resultHTML} />
     </div>
   );
 }
