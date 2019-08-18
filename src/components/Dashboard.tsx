@@ -4,15 +4,8 @@ import { dashboardStyles } from '../constants/styles-component';
 import { connect } from 'react-redux';
 import { DashboardProps } from '../types/components';
 import Typography from '@material-ui/core/Typography';
-import { RootState } from '../redux/types/root';
 
-const mapStateToProps = (state: RootState) => {
-  return {
-    username: state.auth.username
-  }
-}
-
-const Dashboard = connect(mapStateToProps)((props: DashboardProps) => {
+const Dashboard = connect()((props: DashboardProps) => {
   const classes = dashboardStyles();
   return (
     <Grid
@@ -23,7 +16,7 @@ const Dashboard = connect(mapStateToProps)((props: DashboardProps) => {
       className={classes.pageGrid}
     >
       <Typography variant='h3'>
-        Welcome {props.username}!
+        Welcome to Containerize!
       </Typography>
     </Grid>
   );

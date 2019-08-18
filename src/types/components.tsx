@@ -63,11 +63,11 @@ export interface MainPageProps extends RouteComponentProps {
   dispatch: Dispatch<any>
   loggedIn: boolean
   signoutWarn: boolean
+  username: string
 }
 
 export interface DashboardProps {
   dispatch: Dispatch<any>
-  username: string
 }
 
 export interface SignedOutProps {

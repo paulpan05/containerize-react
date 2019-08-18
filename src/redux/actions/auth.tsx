@@ -395,20 +395,39 @@ const forgotPassword: ThunkActionCreatorPreset = (username: string) => {
 
 const forgotPasswordSubmit: ThunkActionCreatorPreset =
   (username: string, code: string, password: string) => {
-    return async (dispatch) => {
-      try {
-        dispatch(forgotPasswordSubmitRequest());
-        await Auth.forgotPasswordSubmit(username, code, password);
-        dispatch(forgotPasswordSubmitRequestSuccess());
-      } catch (error) {
-        if (error.message) {
-          dispatch(forgotPasswordSubmitRequestFailure(error.message));
-        } else {
-          dispatch(forgotPasswordSubmitRequestFailure(error));
-        }
+  return async (dispatch) => {
+    try {
+      dispatch(forgotPasswordSubmitRequest());
+      await Auth.forgotPasswordSubmit(username, code, password);
+      dispatch(forgotPasswordSubmitRequestSuccess());
+    } catch (error) {
+      if (error.message) {
+        dispatch(forgotPasswordSubmitRequestFailure(error.message));
+      } else {
+        dispatch(forgotPasswordSubmitRequestFailure(error));
       }
     }
   }
+}
+
+const performWithAuthenticatedUser: ThunkActionCreatorPreset = (loggedIn: boolean, todo?: Function) => {
+  return async (dispatch) => {
+    try {
+      const user: CognitoUser = await Auth.currentAuthenticatedUser();
+      dispatch(setUsername(user.getUsername()));
+      dispatch(pageloadLoggedIn());
+      if (todo) {
+        todo();
+      }
+    } catch (error) {
+      if (loggedIn) {
+        dispatch(signoutWarn());
+      } else {
+        dispatch(pageloadNotLoggedIn());
+      }
+    }
+  }
+}
 
 export {
   login,
@@ -438,5 +457,6 @@ export {
   setUsername,
   pageloadLoggedIn,
   pageloadNotLoggedIn,
-  signoutWarn
+  signoutWarn,
+  performWithAuthenticatedUser
 };

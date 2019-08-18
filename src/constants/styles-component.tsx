@@ -1,5 +1,7 @@
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 
+const drawerWidth = 240;
+
 const loginPageStyles = makeStyles((theme: Theme) =>
   createStyles({
     pageGrid: {
@@ -114,9 +116,44 @@ const alertSnackbarStyles = makeStyles((theme: Theme) =>
 const mainPageStyles = makeStyles((theme: Theme) =>
   createStyles({
     mainDiv: {
-      display: 'flex',
-      flexFlow: 'column',
-      minHeight: '100vh'
+      display: 'flex'
+    },
+    appBar: {
+      marginLeft: drawerWidth,
+      [theme.breakpoints.up('sm')]: {
+        width: `calc(100% - ${drawerWidth}px)`
+      }
+    },
+    menuButton: {
+      marginRight: theme.spacing(2),
+      [theme.breakpoints.up('sm')]: {
+        display: 'none'
+      }
+    },
+    toolbar: theme.mixins.toolbar,
+    drawer : {
+      [theme.breakpoints.up('sm')]: {
+        width: drawerWidth,
+        flexShrink: 0
+      }
+    },
+    grow: {
+      flexGrow: 1
+    },
+    drawerPaper: {
+      width: drawerWidth,
+    },
+    content: {
+      flexGrow: 1,
+      padding: theme.spacing(3)
+    },
+    drawerTop: {
+      height: '1em',
+      width: 'auto',
+      paddingTop: '0.25em'
+    },
+    drawerTopContent: {
+      verticalAlign: 'middle'
     }
   })
 );
@@ -124,8 +161,7 @@ const mainPageStyles = makeStyles((theme: Theme) =>
 const dashboardStyles = makeStyles((theme: Theme) => 
   createStyles({
     pageGrid: {
-      verticalAlign: 'middle',
-      flexGrow: 1
+      verticalAlign: 'middle'
     }
   })
 );
