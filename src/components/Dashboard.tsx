@@ -1,25 +1,14 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
 import { dashboardStyles } from '../constants/styles-component';
-import { connect } from 'react-redux';
-import { DashboardProps } from '../types/components';
 import Typography from '@material-ui/core/Typography';
 
-const Dashboard = connect()((props: DashboardProps) => {
+const Dashboard: React.FC = () => {
   const classes = dashboardStyles();
   return (
-    <Grid
-      container
-      direction='column'
-      justify='center'
-      alignItems='center'
-      className={classes.pageGrid}
-    >
-      <Typography variant='h3'>
-        Welcome to Containerize!
-      </Typography>
-    </Grid>
+    <Typography variant='h3' className={classes.titleText}>
+      Welcome to Containerize!
+    </Typography>
   );
-})
+}
 
 export default Dashboard;

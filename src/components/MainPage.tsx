@@ -16,12 +16,17 @@ import Drawer from '@material-ui/core/Drawer';
 import useTheme from '@material-ui/core/styles/useTheme';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import clsx from 'clsx';
 import drawerLogo from '../img/drawer.png';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import HomeIcon from '@material-ui/icons/Home';
+import LiveTvIcon from '@material-ui/icons/LiveTv';
+import MarkdownPlayground from './MarkdownPlayground';
 
 const mapsStateToProps = (state: RootState) => {
   return {
@@ -35,6 +40,7 @@ const MainPage = connect(mapsStateToProps)((props: MainPageProps) => {
   const classes = mainPageStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [redirectMode, setRedirectMode] = React.useState();
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   }
@@ -49,7 +55,28 @@ const MainPage = connect(mapsStateToProps)((props: MainPageProps) => {
         <img src={drawerLogo} alt='logo' className={clsx(classes.drawerTop, classes.toolbar)} />
       </Grid>
       <Divider />
-      <List></List>
+      <List>
+        <ListItem
+          button
+          onClick={() => {
+            setRedirectMode('dashboard');
+            setMobileOpen(false);
+          }}
+        >
+          <ListItemIcon><HomeIcon /></ListItemIcon>
+          <ListItemText primary='Home' />
+        </ListItem>
+        <ListItem
+          button
+          onClick={() => {
+            setRedirectMode('markdown-playground')
+            setMobileOpen(false);
+          }}
+        >
+          <ListItemIcon><LiveTvIcon /></ListItemIcon>
+          <ListItemText primary='Markdown Playground' />
+        </ListItem>
+      </List>
       <Divider />
       <List></List>
     </div>
@@ -62,9 +89,11 @@ const MainPage = connect(mapsStateToProps)((props: MainPageProps) => {
       {!props.loggedIn && (
         <Redirect to='/' />
       )}
+      {redirectMode && (
+        <Redirect to={`${props.match.url}/${redirectMode}`} />
+      )}
       {props.loggedIn && !props.signoutWarn && (
         <div className={classes.mainDiv}>
-          <CssBaseline />
           <AppBar position='fixed' className={classes.appBar}>
             <Toolbar>
               <IconButton
@@ -123,6 +152,7 @@ const MainPage = connect(mapsStateToProps)((props: MainPageProps) => {
             <div className={classes.toolbar} />
             <Switch location={props.location}>
               <Route path={`${props.match.url}/dashboard`} component={Dashboard} />
+              <Route path={`${props.match.url}/markdown-playground`} component={MarkdownPlayground} />
             </Switch>
           </main>
         </div>

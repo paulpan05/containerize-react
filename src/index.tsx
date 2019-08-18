@@ -8,6 +8,8 @@ import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 import amplifyConfig from './constants/amplify-config';
 import rootStore from './redux/stores/root-store';
+import 'github-markdown-css';
+import 'highlight.js/styles/github.css';
 
 Amplify.configure(amplifyConfig);
 

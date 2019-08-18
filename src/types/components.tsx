@@ -66,10 +66,6 @@ export interface MainPageProps extends RouteComponentProps {
   username: string
 }
 
-export interface DashboardProps {
-  dispatch: Dispatch<any>
-}
-
 export interface SignedOutProps {
   dispatch: Dispatch<any>
 }

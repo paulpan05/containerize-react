@@ -1,6 +1,6 @@
 import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 
-const drawerWidth = 240;
+const drawerWidth = 260;
 
 const loginPageStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -141,7 +141,7 @@ const mainPageStyles = makeStyles((theme: Theme) =>
       flexGrow: 1
     },
     drawerPaper: {
-      width: drawerWidth,
+      width: drawerWidth
     },
     content: {
       flexGrow: 1,
@@ -160,8 +160,8 @@ const mainPageStyles = makeStyles((theme: Theme) =>
 
 const dashboardStyles = makeStyles((theme: Theme) => 
   createStyles({
-    pageGrid: {
-      verticalAlign: 'middle'
+    titleText: {
+      textAlign: 'center'
     }
   })
 );
@@ -178,6 +178,27 @@ const signedOutStyles = makeStyles((theme: Theme) =>
   })
 );
 
+const markdownPlaygroundStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    textfield: {
+      width: '100%'
+    },
+    bottomSpacing: {
+      height: '1em'
+    },
+    topSpacing: {
+      height: '0.5em'
+    },
+    resultHTML: {
+      borderStyle: 'solid',
+      borderWidth: '1px',
+      borderRadius: '4px',
+      minHeight: '1em',
+      padding: '18.5px 14px'
+    }
+  })
+);
+
 export {
   loginPageStyles,
   signupPageStyles,
@@ -185,5 +206,6 @@ export {
   alertSnackbarStyles,
   mainPageStyles,
   dashboardStyles,
-  signedOutStyles
+  signedOutStyles,
+  markdownPlaygroundStyles
 };
