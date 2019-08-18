@@ -27,6 +27,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import HomeIcon from '@material-ui/icons/Home';
 import LiveTvIcon from '@material-ui/icons/LiveTv';
 import MarkdownPlayground from './MarkdownPlayground';
+import PageNotFound from './PageNotFound';
 
 const mapsStateToProps = (state: RootState) => {
   return {
@@ -153,6 +154,7 @@ const MainPage = connect(mapsStateToProps)((props: MainPageProps) => {
             <Switch location={props.location}>
               <Route path={`${props.match.url}/dashboard`} component={Dashboard} />
               <Route path={`${props.match.url}/markdown-playground`} component={MarkdownPlayground} />
+              <Route path={`${props.match.url}/*`} component={PageNotFound} />
             </Switch>
           </main>
         </div>
