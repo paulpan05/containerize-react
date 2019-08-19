@@ -115,6 +115,13 @@ const alertSnackbarStyles = makeStyles((theme: Theme) =>
 
 const mainPageStyles = makeStyles((theme: Theme) =>
   createStyles({
+    loadingGrid: {
+      minHeight: '100vh',
+      verticalAlign: 'middle'
+    },
+    loadProgress: {
+      margin: theme.spacing(3)
+    },
     mainDiv: {
       display: 'flex'
     },

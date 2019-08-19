@@ -34,12 +34,21 @@ import Paper from '@material-ui/core/Paper';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogActions from '@material-ui/core/DialogActions';
+import { resetSignoutFailure, signOut } from '../redux/actions/auth';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const mapsStateToProps = (state: RootState) => {
   return {
     loggedIn: state.auth.loggedIn,
     signoutWarn: state.auth.signoutWarn,
-    username: state.auth.username
+    username: state.auth.username,
+    signingOut: state.auth.signingOut,
+    signoutFailed: state.auth.signoutFailed,
+    signoutFailedReason: state.auth.signoutFailedReason
   }
 }
 
@@ -101,6 +110,26 @@ const MainPage = connect(mapsStateToProps)((props: MainPageProps) => {
   );
   return (
     <React.Fragment>
+      <Dialog aria-labelledby='signoutfailed-title' open={props.signoutFailed}>
+        <DialogTitle id='signoutfailed-title'>
+          Sign out failed
+        </DialogTitle>
+        <Divider />
+        <DialogContent>
+          <Typography gutterBottom>
+            {props.signoutFailedReason}
+          </Typography>
+        </DialogContent>
+        <Divider />
+        <DialogActions>
+          <Button color='primary' onClick={(event) => {
+            event.preventDefault();
+            props.dispatch(resetSignoutFailure());
+          }}>
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
       {props.signoutWarn && (
         <SignedOut />
       )}
@@ -110,7 +139,25 @@ const MainPage = connect(mapsStateToProps)((props: MainPageProps) => {
       {redirectMode && (
         <Redirect to={`${props.match.url}/${redirectMode}`} />
       )}
-      {props.loggedIn && !props.signoutWarn && (
+      {props.signingOut && (
+        <Grid
+          container
+          direction='column'
+          justify='center'
+          alignItems='center'
+          className={classes.loadingGrid}
+        >
+          <Grid item>
+            <Typography align='center' variant='h4'>
+              Signing out
+            </Typography>
+          </Grid>
+          <Grid item>
+            <CircularProgress size='10em' className={classes.loadProgress} />
+          </Grid>
+        </Grid>
+      )}
+      {props.loggedIn && !props.signoutWarn && !props.signingOut && (
         <div className={classes.mainDiv}>
           <AppBar position='fixed' className={classes.appBar}>
             <Toolbar>
@@ -146,7 +193,11 @@ const MainPage = connect(mapsStateToProps)((props: MainPageProps) => {
                     <Paper id='user-menu-grow'>
                       <ClickAwayListener onClickAway={handleUserMenuClose}>
                         <MenuList>
-                          <MenuItem onClick={handleUserMenuClose}>Sign out</MenuItem>
+                          <MenuItem
+                            onClick={(event) => {
+                              handleUserMenuClose(event);
+                              props.dispatch(signOut());
+                            }}>Sign out</MenuItem>
                         </MenuList>
                       </ClickAwayListener>
                     </Paper>

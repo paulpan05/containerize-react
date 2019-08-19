@@ -74,6 +74,7 @@ const auth = (state = initialState, action: AnyAction) => {
       return {
         ...state,
         loggedIn: true,
+        loggingIn: false,
         user: undefined
       };
 
