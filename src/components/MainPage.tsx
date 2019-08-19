@@ -137,24 +137,24 @@ const MainPage = connect(mapsStateToProps)((props: MainPageProps) => {
                 </Typography>
                 <AccountCircle />
               </Button>
+              <Popper open={userMenuOpen} anchorEl={anchorRef.current} transition disablePortal>
+                {({ TransitionProps, placement }) => (
+                  <Grow
+                    {...TransitionProps}
+                    style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+                  >
+                    <Paper id='user-menu-grow'>
+                      <ClickAwayListener onClickAway={handleUserMenuClose}>
+                        <MenuList>
+                          <MenuItem onClick={handleUserMenuClose}>Sign out</MenuItem>
+                        </MenuList>
+                      </ClickAwayListener>
+                    </Paper>
+                  </Grow>
+                )}
+              </Popper>
             </Toolbar>
           </AppBar>
-          <Popper open={userMenuOpen} anchorEl={anchorRef.current} keepMounted transition disablePortal>
-            {({ TransitionProps, placement }) => (
-              <Grow
-                {...TransitionProps}
-                style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-              >
-                <Paper id='user-menu-grow'>
-                  <ClickAwayListener onClickAway={handleUserMenuClose}>
-                    <MenuList>
-                      <MenuItem onClick={handleUserMenuClose}>Sign out</MenuItem>
-                    </MenuList>
-                  </ClickAwayListener>
-                </Paper>
-              </Grow>
-            )}
-          </Popper>
           <nav className={classes.drawer} aria-label='containerize menu'>
             <Hidden smUp implementation='css'>
               <Drawer

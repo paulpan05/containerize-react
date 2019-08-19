@@ -34,7 +34,10 @@ const initialState: AuthState = {
   forgotPasswordConfirmFailedReason: '',
   forgotPasswordLoginRedirect: false,
   username: '',
-  signoutWarn: false
+  signoutWarn: false,
+  signingOut: false,
+  signoutFailed: false,
+  signoutFailedReason: ''
 }
 
 const auth = (state = initialState, action: AnyAction) => {
@@ -121,7 +124,9 @@ const auth = (state = initialState, action: AnyAction) => {
         forgotPasswordProcessing: false,
         forgotPasswordConfirm: false,
         forgotPasswordConfirmFailed: false,
-        forgotPasswordFailed: false
+        forgotPasswordFailed: false,
+        signingOut: false,
+        signoutFailed: false
       }
 
     case authConstants.SIGNUP_REQUEST:
@@ -330,6 +335,34 @@ const auth = (state = initialState, action: AnyAction) => {
       return {
         ...state,
         signoutWarn: true
+      }
+
+    case authConstants.SIGNOUT_REQUEST:
+      return {
+        ...state,
+        signoutFailed: false,
+        signingOut: true
+      }
+
+    case authConstants.SIGNOUT_SUCCESS:
+      return {
+        ...state,
+        loggedIn: false,
+        signingOut: false
+      }
+
+    case authConstants.SIGNOUT_FAILURE:
+      return {
+        ...state,
+        signingOut: false,
+        signoutFailed: true,
+        signoutFailedReason: action.reason
+      }
+
+    case authConstants.RESET_SIGNOUT_FAILURE:
+      return {
+        ...state,
+        signoutFailed: false
       }
 
     default:
