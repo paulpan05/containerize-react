@@ -508,5 +508,6 @@ export {
   pageloadNotLoggedIn,
   signoutWarn,
   performWithAuthenticatedUser,
+  signOut,
   resetSignoutFailure
 };
