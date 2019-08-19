@@ -2,6 +2,7 @@ import thunk from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
 import rootReducer from '../reducers/root-reducer';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import _ from 'lodash';
 
 const saveStateToStorage = (state: any) => {
   try {
@@ -35,6 +36,12 @@ const rootStore = createStore(
   )
 );
 
-rootStore.subscribe(() => {saveStateToStorage(rootStore.getState())})
+rootStore.subscribe(_.throttle(() => {
+  saveStateToStorage({
+    auth: {
+      loggedIn: rootStore.getState().auth.loggedIn
+    }
+  })
+}, 1000));
 
 export default rootStore;
