@@ -2,7 +2,7 @@ import { AnyAction } from "redux";
 import { authConstants } from "../constants/auth";
 import { AuthState } from "../types/auth";
 
-const initialState: AuthState = {
+const initialAuthState: AuthState = {
   loggingIn: false,
   loggedIn: false,
   loginFailed: false,
@@ -40,7 +40,7 @@ const initialState: AuthState = {
   signoutFailedReason: ''
 }
 
-const auth = (state = initialState, action: AnyAction) => {
+const auth = (state = initialAuthState, action: AnyAction) => {
   switch (action.type) {
     case authConstants.LOGIN_REQUEST:
       return {
@@ -371,4 +371,5 @@ const auth = (state = initialState, action: AnyAction) => {
   }
 }
 
+export { initialAuthState };
 export default auth;

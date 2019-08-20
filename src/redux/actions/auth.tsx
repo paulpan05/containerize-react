@@ -310,7 +310,7 @@ const loginPasswordReset: ThunkActionCreatorPreset = (user: any, newPassword: an
         dispatch(passwordResetFailure(error.message));
       } else {
         dispatch(passwordResetFailure('Unknown error: Please check console output.'));
-        console.log(error)
+        console.error(error)
       }
     }
   }
@@ -334,7 +334,7 @@ const login: ThunkActionCreatorPreset = (id: string, password: string) => {
         dispatch(loginFailure(error.message));
       } else {
         dispatch(loginFailure('Unknown error: Please check console output.'));
-        console.log(error)
+        console.error(error)
       }
     }
   }
@@ -367,7 +367,7 @@ const signup: ThunkActionCreatorPreset = (username: string,
         dispatch(signupFailure(error.message));
       } else {
         dispatch(signupFailure('Unknown error: Please check console output.'));
-        console.log(error)
+        console.error(error)
       }
     }
   }
@@ -384,7 +384,7 @@ const signOut: ThunkActionCreatorPreset = () => {
         dispatch(signoutFailure(error.message));
       } else {
         dispatch(signoutFailure('Unknown error: Please check console output.'));
-        console.log(error)
+        console.error(error)
       }
     }
   }
@@ -401,7 +401,7 @@ const resendSignupVerification: ThunkActionCreatorPreset = (username: string) =>
         dispatch(resendSignupFailure(error.message));
       } else {
         dispatch(resendSignupFailure('Unknown error: Please check console output.'));
-        console.log(error)
+        console.error(error)
       }
     }
   }
@@ -418,7 +418,7 @@ const signupVerification: ThunkActionCreatorPreset = (username: string, code: st
         dispatch(signupVerificationFailure(error.message));
       } else {
         dispatch(signupVerificationFailure('Unknown error: Please check console output.'));
-        console.log(error)
+        console.error(error)
       }
     }
   }
@@ -435,7 +435,7 @@ const forgotPassword: ThunkActionCreatorPreset = (username: string) => {
         dispatch(forgotPasswordRequestFailure(error.message));
       } else {
         dispatch(forgotPasswordRequestFailure('Unknown error: Please check console output.'));
-        console.log(error)
+        console.error(error)
       }
     }
   }
@@ -453,7 +453,7 @@ const forgotPasswordSubmit: ThunkActionCreatorPreset =
         dispatch(forgotPasswordSubmitRequestFailure(error.message));
       } else {
         dispatch(forgotPasswordSubmitRequestFailure('Unknown error: Please check console output.'));
-        console.log(error)
+        console.error(error)
       }
     }
   }

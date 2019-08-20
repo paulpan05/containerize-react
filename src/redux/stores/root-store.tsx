@@ -1,6 +1,7 @@
 import thunk from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
 import rootReducer from '../reducers/root-reducer';
+import { initialAuthState } from '../reducers/auth';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import _ from 'lodash';
 
@@ -9,7 +10,7 @@ const saveStateToStorage = (state: any) => {
     const serializedState = JSON.stringify(state);
     localStorage.setItem('state', serializedState);
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 }
 
@@ -21,7 +22,7 @@ const loadStateFromStorage = () => {
     }
     return JSON.parse(serializedState);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return undefined;
   }
 }
@@ -39,6 +40,7 @@ const rootStore = createStore(
 rootStore.subscribe(_.throttle(() => {
   saveStateToStorage({
     auth: {
+      ...initialAuthState,
       loggedIn: rootStore.getState().auth.loggedIn
     }
   })
