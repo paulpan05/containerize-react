@@ -2,7 +2,7 @@ import { AnyAction } from "redux";
 import { authConstants } from "../constants/auth";
 import { AuthState } from "../types/auth";
 
-const initialState: AuthState = {
+const initialAuthState: AuthState = {
   loggingIn: false,
   loggedIn: false,
   loginFailed: false,
@@ -34,10 +34,13 @@ const initialState: AuthState = {
   forgotPasswordConfirmFailedReason: '',
   forgotPasswordLoginRedirect: false,
   username: '',
-  signoutWarn: false
+  signoutWarn: false,
+  signingOut: false,
+  signoutFailed: false,
+  signoutFailedReason: ''
 }
 
-const auth = (state = initialState, action: AnyAction) => {
+const auth = (state = initialAuthState, action: AnyAction) => {
   switch (action.type) {
     case authConstants.LOGIN_REQUEST:
       return {
@@ -71,6 +74,7 @@ const auth = (state = initialState, action: AnyAction) => {
       return {
         ...state,
         loggedIn: true,
+        loggingIn: false,
         user: undefined
       };
 
@@ -121,7 +125,9 @@ const auth = (state = initialState, action: AnyAction) => {
         forgotPasswordProcessing: false,
         forgotPasswordConfirm: false,
         forgotPasswordConfirmFailed: false,
-        forgotPasswordFailed: false
+        forgotPasswordFailed: false,
+        signingOut: false,
+        signoutFailed: false
       }
 
     case authConstants.SIGNUP_REQUEST:
@@ -332,9 +338,38 @@ const auth = (state = initialState, action: AnyAction) => {
         signoutWarn: true
       }
 
+    case authConstants.SIGNOUT_REQUEST:
+      return {
+        ...state,
+        signoutFailed: false,
+        signingOut: true
+      }
+
+    case authConstants.SIGNOUT_SUCCESS:
+      return {
+        ...state,
+        loggedIn: false,
+        signingOut: false
+      }
+
+    case authConstants.SIGNOUT_FAILURE:
+      return {
+        ...state,
+        signingOut: false,
+        signoutFailed: true,
+        signoutFailedReason: action.reason
+      }
+
+    case authConstants.RESET_SIGNOUT_FAILURE:
+      return {
+        ...state,
+        signoutFailed: false
+      }
+
     default:
       return state;
   }
 }
 
+export { initialAuthState };
 export default auth;

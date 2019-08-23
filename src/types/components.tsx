@@ -64,6 +64,9 @@ export interface MainPageProps extends RouteComponentProps {
   loggedIn: boolean
   signoutWarn: boolean
   username: string
+  signingOut: boolean
+  signoutFailed: boolean
+  signoutFailedReason: string
 }
 
 export interface SignedOutProps {
@@ -76,6 +79,10 @@ export const variantIcon = {
   error: ErrorIcon,
   info: InfoIcon,
 };
+
+export interface MarkdownDisplayProps {
+  innerText: string
+}
 
 export interface AlertSnackbarProps {
   className?: string;

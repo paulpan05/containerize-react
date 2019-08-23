@@ -256,6 +256,31 @@ const signoutWarn = () => {
   }
 }
 
+const signoutRequest = () => {
+  return {
+    type: authConstants.SIGNOUT_REQUEST
+  }
+}
+
+const signoutSuccess = () => {
+  return {
+    type: authConstants.SIGNOUT_SUCCESS
+  }
+}
+
+const signoutFailure = (reason: string) => {
+  return {
+    type: authConstants.SIGNOUT_FAILURE,
+    reason
+  }
+}
+
+const resetSignoutFailure = () => {
+  return {
+    type: authConstants.RESET_SIGNOUT_FAILURE
+  }
+}
+
 const handleAuthChallenge = (user: any, dispatch: ThunkDispatchPreset) => {
   switch (user.challengeName) {
     case 'NEW_PASSWORD_REQUIRED':
@@ -284,7 +309,8 @@ const loginPasswordReset: ThunkActionCreatorPreset = (user: any, newPassword: an
       if (error.message) {
         dispatch(passwordResetFailure(error.message));
       } else {
-        dispatch(passwordResetFailure(error));
+        dispatch(passwordResetFailure('Unknown error: Please check console output.'));
+        console.error(error)
       }
     }
   }
@@ -307,7 +333,8 @@ const login: ThunkActionCreatorPreset = (id: string, password: string) => {
       } else if (error.message) {
         dispatch(loginFailure(error.message));
       } else {
-        dispatch(loginFailure(error));
+        dispatch(loginFailure('Unknown error: Please check console output.'));
+        console.error(error)
       }
     }
   }
@@ -339,7 +366,25 @@ const signup: ThunkActionCreatorPreset = (username: string,
       if (error.message) {
         dispatch(signupFailure(error.message));
       } else {
-        dispatch(signupFailure(error));
+        dispatch(signupFailure('Unknown error: Please check console output.'));
+        console.error(error)
+      }
+    }
+  }
+}
+
+const signOut: ThunkActionCreatorPreset = () => {
+  return async (dispatch) => {
+    try {
+      dispatch(signoutRequest());
+      await Auth.signOut();
+      dispatch(signoutSuccess());
+    } catch (error) {
+      if (error.message) {
+        dispatch(signoutFailure(error.message));
+      } else {
+        dispatch(signoutFailure('Unknown error: Please check console output.'));
+        console.error(error)
       }
     }
   }
@@ -355,7 +400,8 @@ const resendSignupVerification: ThunkActionCreatorPreset = (username: string) =>
       if (error.message) {
         dispatch(resendSignupFailure(error.message));
       } else {
-        dispatch(resendSignupFailure(error));
+        dispatch(resendSignupFailure('Unknown error: Please check console output.'));
+        console.error(error)
       }
     }
   }
@@ -371,7 +417,8 @@ const signupVerification: ThunkActionCreatorPreset = (username: string, code: st
       if (error.message) {
         dispatch(signupVerificationFailure(error.message));
       } else {
-        dispatch(signupVerificationFailure(error));
+        dispatch(signupVerificationFailure('Unknown error: Please check console output.'));
+        console.error(error)
       }
     }
   }
@@ -387,7 +434,8 @@ const forgotPassword: ThunkActionCreatorPreset = (username: string) => {
       if (error.message) {
         dispatch(forgotPasswordRequestFailure(error.message));
       } else {
-        dispatch(forgotPasswordRequestFailure(error));
+        dispatch(forgotPasswordRequestFailure('Unknown error: Please check console output.'));
+        console.error(error)
       }
     }
   }
@@ -404,7 +452,8 @@ const forgotPasswordSubmit: ThunkActionCreatorPreset =
       if (error.message) {
         dispatch(forgotPasswordSubmitRequestFailure(error.message));
       } else {
-        dispatch(forgotPasswordSubmitRequestFailure(error));
+        dispatch(forgotPasswordSubmitRequestFailure('Unknown error: Please check console output.'));
+        console.error(error)
       }
     }
   }
@@ -458,5 +507,7 @@ export {
   pageloadLoggedIn,
   pageloadNotLoggedIn,
   signoutWarn,
-  performWithAuthenticatedUser
+  performWithAuthenticatedUser,
+  signOut,
+  resetSignoutFailure
 };

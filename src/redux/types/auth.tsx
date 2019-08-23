@@ -33,4 +33,7 @@ export interface AuthState {
   forgotPasswordLoginRedirect: boolean
   username: string
   signoutWarn: boolean
+  signingOut: boolean 
+  signoutFailed: boolean
+  signoutFailedReason: string
 }

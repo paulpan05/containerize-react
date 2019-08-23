@@ -115,6 +115,13 @@ const alertSnackbarStyles = makeStyles((theme: Theme) =>
 
 const mainPageStyles = makeStyles((theme: Theme) =>
   createStyles({
+    loadingGrid: {
+      minHeight: '100vh',
+      verticalAlign: 'middle'
+    },
+    loadProgress: {
+      margin: theme.spacing(3)
+    },
     mainDiv: {
       display: 'flex'
     },
@@ -145,7 +152,13 @@ const mainPageStyles = makeStyles((theme: Theme) =>
     },
     content: {
       flexGrow: 1,
-      padding: theme.spacing(3)
+      padding: theme.spacing(3),
+      [theme.breakpoints.up('xs')]: {
+        width: `calc(100vw - 2 * ${theme.spacing(3)}px)`
+      },
+      [theme.breakpoints.up('sm')]: {
+        width: `calc(100vw - ${drawerWidth}px - 2 * ${theme.spacing(3)}px)`
+      }
     },
     drawerTop: {
       height: '1em',
@@ -178,23 +191,25 @@ const signedOutStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const markdownPlaygroundStyles = makeStyles((theme: Theme) =>
+const markdownDisplayStyles = makeStyles((theme: Theme) =>
   createStyles({
-    textfield: {
-      width: '100%'
-    },
-    bottomSpacing: {
-      height: '1em'
-    },
-    topSpacing: {
-      height: '0.5em'
-    },
     resultHTML: {
       borderStyle: 'solid',
       borderWidth: '1px',
       borderRadius: '4px',
       minHeight: '1em',
       padding: '18.5px 14px'
+    }
+  })
+);
+
+const markdownPlaygroundStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    bottomSpacing: {
+      height: '1em'
+    },
+    topSpacing: {
+      height: '0.5em'
     }
   })
 );
@@ -207,5 +222,6 @@ export {
   mainPageStyles,
   dashboardStyles,
   signedOutStyles,
-  markdownPlaygroundStyles
+  markdownPlaygroundStyles,
+  markdownDisplayStyles
 };
