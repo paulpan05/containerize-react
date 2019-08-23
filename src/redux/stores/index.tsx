@@ -1,7 +1,6 @@
 import thunk from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux';
-import rootReducer from '../reducers/root-reducer';
-import { initialAuthState } from '../reducers/auth';
+import { rootReducer, initialAuthState } from '../reducers';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import _ from 'lodash';
 
@@ -46,4 +45,4 @@ rootStore.subscribe(_.throttle(() => {
   })
 }, 1000));
 
-export default rootStore;
+export { rootStore };

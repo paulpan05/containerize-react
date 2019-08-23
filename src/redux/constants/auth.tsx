@@ -1,4 +1,4 @@
-enum authConstants {
+export const enum authConstants {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
@@ -45,5 +45,3 @@ enum authConstants {
   SIGNOUT_FAILURE,
   RESET_SIGNOUT_FAILURE
 }
-
-export { authConstants };

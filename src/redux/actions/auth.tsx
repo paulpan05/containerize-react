@@ -1,6 +1,6 @@
-import { authConstants } from '../constants/auth';
+import { authConstants } from '../constants';
 import { Auth } from 'aws-amplify';
-import { ThunkActionCreatorPreset, ThunkDispatchPreset } from '../types/redux';
+import { ThunkActionCreatorPreset, ThunkDispatchPreset } from '../types';
 import { CognitoUser } from 'amazon-cognito-identity-js';
 
 const loginRequest = () => {
@@ -478,7 +478,7 @@ const performWithAuthenticatedUser: ThunkActionCreatorPreset = (loggedIn: boolea
   }
 }
 
-export {
+export const authActions = {
   login,
   loginSuccess,
   loginFailureReset,
