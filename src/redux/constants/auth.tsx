@@ -1,4 +1,4 @@
-export const enum authConstants {
+export enum authConstants {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
