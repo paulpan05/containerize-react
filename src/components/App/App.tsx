@@ -1,10 +1,10 @@
 import React from 'react';
 import RootRoute from '../../routes/RootRoute';
-import { performWithAuthenticatedUser } from '../../redux/actions/auth';
+import { authActions } from '../../redux/actions';
 import { connect } from 'react-redux';
 import { AppProps } from './types';
 import PageRoutes from '../../routes/PageRoutes';
-import { RootState } from '../../redux/types/root';
+import { RootState } from '../../redux/types';
 
 const mapStateToProps = (state: RootState) => {
   return {
@@ -14,7 +14,7 @@ const mapStateToProps = (state: RootState) => {
 
 const App = connect(mapStateToProps)((props: AppProps) => {
   React.useEffect(() => {
-    props.dispatch(performWithAuthenticatedUser(props.loggedIn));
+    props.dispatch(authActions.performWithAuthenticatedUser(props.loggedIn));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (

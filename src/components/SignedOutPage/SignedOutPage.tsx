@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
 import { SignedOutProps } from './types';
-import { pageloadNotLoggedIn, backToLogin } from '../../redux/actions/auth';
+import { authActions } from '../../redux/actions';
 import { signedOutStyles } from './constants';
 
 const SignedOut = connect()((props: SignedOutProps) => {
@@ -35,8 +35,8 @@ const SignedOut = connect()((props: SignedOutProps) => {
           color='primary'
           onClick={(event) => {
             event.preventDefault();
-            props.dispatch(pageloadNotLoggedIn());
-            props.dispatch(backToLogin());
+            props.dispatch(authActions.pageloadNotLoggedIn());
+            props.dispatch(authActions.backToLogin());
           }}
         >
           Back to login

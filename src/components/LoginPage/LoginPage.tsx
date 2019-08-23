@@ -9,19 +9,8 @@ import Typography from '@material-ui/core/Typography';
 import { Link, Redirect } from 'react-router-dom';
 import logo from '../../img/logo.png';
 import { LoginPageProps } from './types';
-import {
-  login,
-  loginFailureReset,
-  loginPasswordReset,
-  passwordResetFailureReset,
-  backToLogin,
-  resetSignedUp,
-  resendSignupVerification,
-  redirectToSignup,
-  signupRequestComplete,
-  resetForgotPasswordLoginRedirect
-} from '../../redux/actions/auth';
-import { RootState } from '../../redux/types/root';
+import { authActions } from '../../redux/actions';
+import { RootState } from '../../redux/types';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import AlertSnackbar from '../AlertSnackbar';
 
@@ -90,10 +79,10 @@ const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
                   onKeyPress={(event) => {
                     if (event.key === 'Enter' && username) {
                       event.preventDefault();
-                      props.dispatch(backToLogin());
-                      props.dispatch(signupRequestComplete(username, 'Email'));
-                      props.dispatch(resendSignupVerification(username));
-                      props.dispatch(redirectToSignup());
+                      props.dispatch(authActions.backToLogin());
+                      props.dispatch(authActions.signupRequestComplete(username, 'Email'));
+                      props.dispatch(authActions.resendSignupVerification(username));
+                      props.dispatch(authActions.redirectToSignup());
                       setUsername(undefined);
                     }
                   }}
@@ -112,10 +101,10 @@ const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
                       color='primary'
                       onClick={(event) => {
                         event.preventDefault();
-                        props.dispatch(backToLogin());
-                        props.dispatch(signupRequestComplete(username, 'Email'));
-                        props.dispatch(resendSignupVerification(username));
-                        props.dispatch(redirectToSignup());
+                        props.dispatch(authActions.backToLogin());
+                        props.dispatch(authActions.signupRequestComplete(username, 'Email'));
+                        props.dispatch(authActions.resendSignupVerification(username));
+                        props.dispatch(authActions.redirectToSignup());
                         setUsername(undefined);
                       }}
                     >
@@ -127,7 +116,7 @@ const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
                       variant='body1'
                       onClick={(event: React.MouseEvent) => {
                         event.preventDefault();
-                        props.dispatch(backToLogin());
+                        props.dispatch(authActions.backToLogin());
                       }}
                     >
                       Back to login
@@ -154,7 +143,7 @@ const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
                     variant='error'
                     onClose={() => {
                       props.dispatch(
-                        passwordResetFailureReset()
+                        authActions.passwordResetFailureReset()
                       );
                     }}
                     className={classes.snackbarMargin}
@@ -172,7 +161,7 @@ const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
                   onKeyPress={(event) => {
                     if (event.key === 'Enter' && password) {
                       event.preventDefault();
-                      props.dispatch(loginPasswordReset(props.user, password));
+                      props.dispatch(authActions.loginPasswordReset(props.user, password));
                       setPassword(undefined);
                     }
                   }}
@@ -192,7 +181,7 @@ const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
                       color='primary'
                       onClick={(event) => {
                         event.preventDefault();
-                        props.dispatch(loginPasswordReset(props.user, password));
+                        props.dispatch(authActions.loginPasswordReset(props.user, password));
                         setPassword(undefined);
                       }}
                     >
@@ -204,7 +193,7 @@ const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
                       variant='body1'
                       onClick={(event: React.MouseEvent) => {
                         event.preventDefault();
-                        props.dispatch(backToLogin());
+                        props.dispatch(authActions.backToLogin());
                       }}
                     >
                       Back to login
@@ -243,7 +232,7 @@ const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
                     variant='success'
                     onClose={() => {
                       props.dispatch(
-                        resetForgotPasswordLoginRedirect()
+                        authActions.resetForgotPasswordLoginRedirect()
                       );
                     }}
                     className={classes.snackbarMargin}
@@ -255,7 +244,7 @@ const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
                     variant='success'
                     onClose={() => {
                       props.dispatch(
-                        resetSignedUp()
+                        authActions.resetSignedUp()
                       );
                     }}
                     className={classes.snackbarMargin}
@@ -267,7 +256,7 @@ const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
                     variant='error'
                     onClose={() => {
                       props.dispatch(
-                        loginFailureReset()
+                        authActions.loginFailureReset()
                       );
                     }}
                     className={classes.snackbarMargin}
@@ -285,7 +274,7 @@ const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
                   onKeyPress={(event) => {
                     if (event.key === 'Enter' && id && password) {
                       event.preventDefault();
-                      props.dispatch(login(id, password));
+                      props.dispatch(authActions.login(id, password));
                       setId(undefined);
                       setPassword(undefined);
                     }
@@ -303,7 +292,7 @@ const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
                   onKeyPress={(event) => {
                     if (event.key === 'Enter' && id && password) {
                       event.preventDefault();
-                      props.dispatch(login(id, password));
+                      props.dispatch(authActions.login(id, password));
                       setId(undefined);
                       setPassword(undefined);
                     }
@@ -324,7 +313,7 @@ const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
                       color='primary'
                       onClick={(event) => {
                         event.preventDefault();
-                        props.dispatch(login(id, password));
+                        props.dispatch(authActions.login(id, password));
                         setId(undefined);
                         setPassword(undefined);
                       }}
@@ -337,7 +326,7 @@ const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
                       component={Link}
                       to='/forgot-password'
                       variant='body1'
-                      onClick={() => { props.dispatch(resetForgotPasswordLoginRedirect()) }}
+                      onClick={() => { props.dispatch(authActions.resetForgotPasswordLoginRedirect()) }}
                     >
                       Forgot password?
                     </MuiLink>
@@ -356,7 +345,7 @@ const LoginPage = connect(mapStateToProps)((props: LoginPageProps) => {
                     component={Link}
                     to='/signup'
                     variant='body1'
-                    onClick={() => { props.dispatch(resetSignedUp()) }}
+                    onClick={() => { props.dispatch(authActions.resetSignedUp()) }}
                   >
                     Sign up
                   </MuiLink>

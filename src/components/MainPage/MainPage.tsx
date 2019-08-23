@@ -1,6 +1,6 @@
 import React from 'react';
 import { mainPageStyles } from './constants';
-import { RootState } from '../../redux/types/root';
+import { RootState } from '../../redux/types';
 import { connect } from 'react-redux';
 import { MainPageProps } from './types';
 import { Redirect, Route, Switch } from 'react-router';
@@ -37,7 +37,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
-import { resetSignoutFailure, signOut } from '../../redux/actions/auth';
+import { authActions } from '../../redux/actions';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 const mapsStateToProps = (state: RootState) => {
@@ -123,7 +123,7 @@ const MainPage = connect(mapsStateToProps)((props: MainPageProps) => {
         <DialogActions>
           <Button color='primary' onClick={(event) => {
             event.preventDefault();
-            props.dispatch(resetSignoutFailure());
+            props.dispatch(authActions.resetSignoutFailure());
           }}>
             Close
           </Button>
@@ -195,7 +195,7 @@ const MainPage = connect(mapsStateToProps)((props: MainPageProps) => {
                           <MenuItem
                             onClick={(event) => {
                               handleUserMenuClose(event);
-                              props.dispatch(signOut());
+                              props.dispatch(authActions.signOut());
                             }}>Sign out</MenuItem>
                         </MenuList>
                       </ClickAwayListener>

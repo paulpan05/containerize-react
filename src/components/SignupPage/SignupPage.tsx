@@ -7,20 +7,10 @@ import MuiLink from '@material-ui/core/Link';
 import { Link, Redirect } from 'react-router-dom';
 import { signupPageStyles } from './constants';
 import logo from '../../img/logo.png';
-import { RootState } from '../../redux/types/root';
+import { RootState } from '../../redux/types';
 import { connect } from 'react-redux';
 import { SignupPageProps } from './types';
-import {
-  signup,
-  signupFailureReset,
-  signupVerification,
-  resendSignupSuccessReset,
-  resendSignupFailureReset,
-  backToLogin,
-  resendSignupVerification,
-  resetRedirectToSignup,
-  signupVerificationFailureReset
-} from '../../redux/actions/auth';
+import { authActions } from '../../redux/actions';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import AlertSnackbar from '../AlertSnackbar';
 
@@ -50,7 +40,7 @@ const SignupPage = connect(mapStateToProps)((props: SignupPageProps) => {
   const [password, setPassword] = React.useState();
   const [confirmCode, setConfirmCode] = React.useState();
   React.useEffect(() => {
-    props.dispatch(resetRedirectToSignup());
+    props.dispatch(authActions.resetRedirectToSignup());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const classes = signupPageStyles();
@@ -96,7 +86,7 @@ const SignupPage = connect(mapStateToProps)((props: SignupPageProps) => {
                     variant='success'
                     onClose={() => {
                       props.dispatch(
-                        resendSignupSuccessReset()
+                        authActions.resendSignupSuccessReset()
                       );
                     }}
                     className={classes.snackbarMargin}
@@ -108,7 +98,7 @@ const SignupPage = connect(mapStateToProps)((props: SignupPageProps) => {
                     variant='error'
                     onClose={() => {
                       props.dispatch(
-                        resendSignupFailureReset()
+                        authActions.resendSignupFailureReset()
                       );
                     }}
                     className={classes.snackbarMargin}
@@ -120,7 +110,7 @@ const SignupPage = connect(mapStateToProps)((props: SignupPageProps) => {
                     variant='error'
                     onClose={() => {
                       props.dispatch(
-                        signupVerificationFailureReset()
+                        authActions.signupVerificationFailureReset()
                       );
                     }}
                     className={classes.snackbarMargin}
@@ -138,7 +128,7 @@ const SignupPage = connect(mapStateToProps)((props: SignupPageProps) => {
                   onKeyPress={(event) => {
                     if (event.key === 'Enter' && confirmCode) {
                       event.preventDefault();
-                      props.dispatch(signupVerification(props.username, confirmCode));
+                      props.dispatch(authActions.signupVerification(props.username, confirmCode));
                       setConfirmCode(undefined);
                     }
                   }}
@@ -157,7 +147,7 @@ const SignupPage = connect(mapStateToProps)((props: SignupPageProps) => {
                       color='primary'
                       onClick={(event) => {
                         event.preventDefault();
-                        props.dispatch(resendSignupVerification(props.username));
+                        props.dispatch(authActions.resendSignupVerification(props.username));
                       }}
                     >
                       Resend verification code
@@ -169,7 +159,7 @@ const SignupPage = connect(mapStateToProps)((props: SignupPageProps) => {
                       color='primary'
                       onClick={(event) => {
                         event.preventDefault();
-                        props.dispatch(signupVerification(props.username, confirmCode));
+                        props.dispatch(authActions.signupVerification(props.username, confirmCode));
                         setConfirmCode(undefined);
                       }}
                     >
@@ -187,7 +177,7 @@ const SignupPage = connect(mapStateToProps)((props: SignupPageProps) => {
                     component={Link}
                     to='/login'
                     variant='body1'
-                    onClick={() => { props.dispatch(backToLogin()) }}
+                    onClick={() => { props.dispatch(authActions.backToLogin()) }}
                   >
                     Back to login
                   </MuiLink>
@@ -242,7 +232,7 @@ const SignupPage = connect(mapStateToProps)((props: SignupPageProps) => {
                     variant='error'
                     onClose={() => {
                       props.dispatch(
-                        signupFailureReset()
+                        authActions.signupFailureReset()
                       );
                     }}
                     className={classes.snackbarMargin}
@@ -261,7 +251,7 @@ const SignupPage = connect(mapStateToProps)((props: SignupPageProps) => {
                   onKeyPress={(event) => {
                     if (event.key === 'Enter' && username && email && password) {
                       event.preventDefault();
-                      props.dispatch(signup(username, email, password));
+                      props.dispatch(authActions.signup(username, email, password));
                       setUsername(undefined);
                       setEmail(undefined);
                       setPassword(undefined);
@@ -280,7 +270,7 @@ const SignupPage = connect(mapStateToProps)((props: SignupPageProps) => {
                   onKeyPress={(event) => {
                     if (event.key === 'Enter' && username && email && password) {
                       event.preventDefault();
-                      props.dispatch(signup(username, email, password));
+                      props.dispatch(authActions.signup(username, email, password));
                       setUsername(undefined);
                       setEmail(undefined);
                       setPassword(undefined);
@@ -299,7 +289,7 @@ const SignupPage = connect(mapStateToProps)((props: SignupPageProps) => {
                   onKeyPress={(event) => {
                     if (event.key === 'Enter' && username && email && password) {
                       event.preventDefault();
-                      props.dispatch(signup(username, email, password));
+                      props.dispatch(authActions.signup(username, email, password));
                       setUsername(undefined);
                       setEmail(undefined);
                       setPassword(undefined);
@@ -320,7 +310,7 @@ const SignupPage = connect(mapStateToProps)((props: SignupPageProps) => {
                       color='primary'
                       onClick={(event) => {
                         event.preventDefault();
-                        props.dispatch(signup(username, email, password));
+                        props.dispatch(authActions.signup(username, email, password));
                         setUsername(undefined);
                         setEmail(undefined);
                         setPassword(undefined);
@@ -335,7 +325,7 @@ const SignupPage = connect(mapStateToProps)((props: SignupPageProps) => {
                       to='/login'
                       variant='body1'
                       onClick={() => {
-                        props.dispatch(backToLogin());
+                        props.dispatch(authActions.backToLogin());
                       }}
                     >
                       Back to log in

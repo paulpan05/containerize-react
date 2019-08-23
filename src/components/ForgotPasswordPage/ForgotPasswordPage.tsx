@@ -1,5 +1,5 @@
 import React from 'react';
-import { RootState } from '../../redux/types/root';
+import { RootState } from '../../redux/types';
 import { connect } from 'react-redux';
 import { ForgotPasswordPageProps } from './types';
 import Grid from '@material-ui/core/Grid';
@@ -8,13 +8,7 @@ import logo from '../../img/logo.png';
 import { Redirect } from 'react-router';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-import {
-  forgotPassword,
-  resetForgotPasswordRequestFailure,
-  backToLogin,
-  resetForgotPasswordSubmitRequestFailure,
-  forgotPasswordSubmit
-} from '../../redux/actions/auth';
+import { authActions } from '../../redux/actions';
 import AlertSnackbar from '../AlertSnackbar';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Button from '@material-ui/core/Button';
@@ -80,7 +74,7 @@ const ForgotPasswordPage = connect(mapStateToProps)((props: ForgotPasswordPagePr
                     variant='error'
                     onClose={() => {
                       props.dispatch(
-                        resetForgotPasswordSubmitRequestFailure()
+                        authActions.resetForgotPasswordSubmitRequestFailure()
                       );
                     }}
                     className={classes.snackbarMargin}
@@ -98,7 +92,7 @@ const ForgotPasswordPage = connect(mapStateToProps)((props: ForgotPasswordPagePr
                   onKeyPress={(event) => {
                     if (event.key === 'Enter' && newPassword && confirmCode) {
                       event.preventDefault();
-                      props.dispatch(forgotPasswordSubmit(props.username, confirmCode, newPassword));
+                      props.dispatch(authActions.forgotPasswordSubmit(props.username, confirmCode, newPassword));
                     }
                   }}
                 />
@@ -113,7 +107,7 @@ const ForgotPasswordPage = connect(mapStateToProps)((props: ForgotPasswordPagePr
                   onKeyPress={(event) => {
                     if (event.key === 'Enter' && newPassword && confirmCode) {
                       event.preventDefault();
-                      props.dispatch(forgotPasswordSubmit(props.username, confirmCode, newPassword));
+                      props.dispatch(authActions.forgotPasswordSubmit(props.username, confirmCode, newPassword));
                       setConfirmCode(undefined);
                       setNewPassword(undefined);
                     }
@@ -134,7 +128,7 @@ const ForgotPasswordPage = connect(mapStateToProps)((props: ForgotPasswordPagePr
                       color='primary'
                       onClick={(event) => {
                         event.preventDefault();
-                        props.dispatch(forgotPasswordSubmit(props.username, confirmCode, newPassword));
+                        props.dispatch(authActions.forgotPasswordSubmit(props.username, confirmCode, newPassword));
                         setConfirmCode(undefined);
                         setNewPassword(undefined);
                       }}
@@ -147,7 +141,7 @@ const ForgotPasswordPage = connect(mapStateToProps)((props: ForgotPasswordPagePr
                       component={Link}
                       to='/login'
                       variant='body1'
-                      onClick={() => { props.dispatch(backToLogin()) }}
+                      onClick={() => { props.dispatch(authActions.backToLogin()) }}
                     >
                       Back to login
                     </MuiLink>
@@ -189,7 +183,7 @@ const ForgotPasswordPage = connect(mapStateToProps)((props: ForgotPasswordPagePr
                     variant='error'
                     onClose={() => {
                       props.dispatch(
-                        resetForgotPasswordRequestFailure()
+                        authActions.resetForgotPasswordRequestFailure()
                       );
                     }}
                     className={classes.snackbarMargin}
@@ -208,7 +202,7 @@ const ForgotPasswordPage = connect(mapStateToProps)((props: ForgotPasswordPagePr
                   onKeyPress={(event) => {
                     if (event.key === 'Enter' && username) {
                       event.preventDefault();
-                      props.dispatch(forgotPassword(username));
+                      props.dispatch(authActions.forgotPassword(username));
                       setUsername(undefined);
                     }
                   }}
@@ -227,7 +221,7 @@ const ForgotPasswordPage = connect(mapStateToProps)((props: ForgotPasswordPagePr
                       color='primary'
                       onClick={(event) => {
                         event.preventDefault();
-                        props.dispatch(forgotPassword(username));
+                        props.dispatch(authActions.forgotPassword(username));
                         setUsername(undefined);
                       }}
                     >
@@ -239,7 +233,7 @@ const ForgotPasswordPage = connect(mapStateToProps)((props: ForgotPasswordPagePr
                       component={Link}
                       to='/login'
                       variant='body1'
-                      onClick={() => { props.dispatch(backToLogin()) }}
+                      onClick={() => { props.dispatch(authActions.backToLogin()) }}
                     >
                       Back to login
                     </MuiLink>
