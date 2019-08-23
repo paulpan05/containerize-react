@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
-import { RootState } from '../redux/types/root';
-import { RootRouteProps } from '../types/routes';
+import { RootState } from '../../redux/types/root';
+import { RootRouteProps } from './types';
 
 const mapStateToProps = (state: RootState) => {
   return {

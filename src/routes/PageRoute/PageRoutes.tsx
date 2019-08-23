@@ -1,10 +1,10 @@
 import React from 'react';
 import { withRouter, Switch, Route } from 'react-router-dom';
-import LoginPage from '../components/LoginPage';
-import SignupPage from '../components/SignupPage';
-import ForgotPasswordPage from '../components/ForgotPasswordPage';
-import MainPage from '../components/MainPage';
-import PageNotFound from '../components/PageNotFound';
+import LoginPage from '../../components/LoginPage';
+import SignupPage from '../../components/SignupPage';
+import ForgotPasswordPage from '../../components/ForgotPasswordPage';
+import MainPage from '../../components/MainPage';
+import PageNotFound from '../../components/PageNotFound';
 
 const PageRoutes = withRouter((props) => {
   return (
