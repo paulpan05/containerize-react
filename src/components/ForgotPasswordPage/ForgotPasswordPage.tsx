@@ -1,15 +1,21 @@
 import React from 'react';
-import { RootState } from '../redux/types/root';
+import { RootState } from '../../redux/types/root';
 import { connect } from 'react-redux';
-import { ForgotPasswordPageProps } from '../types/components';
+import { ForgotPasswordPageProps } from './types';
 import Grid from '@material-ui/core/Grid';
-import { forgotPasswordPageStyles } from '../constants/styles-component';
-import logo from '../img/logo.png';
+import { forgotPasswordPageStyles } from './constants';
+import logo from '../../img/logo.png';
 import { Redirect } from 'react-router';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-import { forgotPassword, resetForgotPasswordRequestFailure, backToLogin, resetForgotPasswordSubmitRequestFailure, forgotPasswordSubmit } from '../redux/actions/auth';
-import AlertSnackbar from './AlertSnackbar';
+import {
+  forgotPassword,
+  resetForgotPasswordRequestFailure,
+  backToLogin,
+  resetForgotPasswordSubmitRequestFailure,
+  forgotPasswordSubmit
+} from '../../redux/actions/auth';
+import AlertSnackbar from '../AlertSnackbar';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';

@@ -1,10 +1,10 @@
 import React from 'react';
-import RootRoute from '../routes/RootRoute';
-import { performWithAuthenticatedUser } from '../redux/actions/auth';
+import RootRoute from '../../routes/RootRoute';
+import { performWithAuthenticatedUser } from '../../redux/actions/auth';
 import { connect } from 'react-redux';
-import { AppProps } from '../types/components';
-import PageRoutes from '../routes/PageRoutes';
-import { RootState } from '../redux/types/root';
+import { AppProps } from './types';
+import PageRoutes from '../../routes/PageRoutes';
+import { RootState } from '../../redux/types/root';
 
 const mapStateToProps = (state: RootState) => {
   return {

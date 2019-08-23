@@ -1,6 +1,6 @@
 import React from 'react';
-import { MarkdownDisplayProps } from '../types/components';
-import { markdownDisplayStyles } from '../constants/styles-component';
+import { MarkdownDisplayProps } from './types';
+import { markdownDisplayStyles } from './constants';
 import hljs from 'highlight.js';
 import ReactMarkdown from 'react-markdown';
 

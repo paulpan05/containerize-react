@@ -5,11 +5,11 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import MuiLink from '@material-ui/core/Link';
 import { Link, Redirect } from 'react-router-dom';
-import { signupPageStyles } from '../constants/styles-component';
-import logo from '../img/logo.png';
-import { RootState } from '../redux/types/root';
+import { signupPageStyles } from './constants';
+import logo from '../../img/logo.png';
+import { RootState } from '../../redux/types/root';
 import { connect } from 'react-redux';
-import { SignupPageProps } from '../types/components';
+import { SignupPageProps } from './types';
 import {
   signup,
   signupFailureReset,
@@ -20,9 +20,9 @@ import {
   resendSignupVerification,
   resetRedirectToSignup,
   signupVerificationFailureReset
-} from '../redux/actions/auth';
+} from '../../redux/actions/auth';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import AlertSnackbar from './AlertSnackbar';
+import AlertSnackbar from '../AlertSnackbar';
 
 const mapStateToProps = (state: RootState) => {
   return {

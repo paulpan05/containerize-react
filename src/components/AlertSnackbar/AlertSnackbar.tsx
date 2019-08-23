@@ -1,12 +1,12 @@
 import React from 'react';
 import clsx from 'clsx';
-import { AlertSnackbarProps, variantIcon } from '../types/components';
+import { AlertSnackbarProps } from './types';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
-import { alertSnackbarStyles } from '../constants/styles-component';
 import { green, amber } from '@material-ui/core/colors';
 import { useTheme } from '@material-ui/core/styles';
+import { variantIcon, alertSnackbarStyles } from './constants';
 
 const AlertSnackbar: React.FC<AlertSnackbarProps> = (props) => {
   const classes = alertSnackbarStyles(props);

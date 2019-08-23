@@ -1,13 +1,13 @@
 import React from 'react';
-import { mainPageStyles } from '../constants/styles-component';
-import { RootState } from '../redux/types/root';
+import { mainPageStyles } from './constants';
+import { RootState } from '../../redux/types/root';
 import { connect } from 'react-redux';
-import { MainPageProps } from '../types/components';
+import { MainPageProps } from './types';
 import { Redirect, Route, Switch } from 'react-router';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Dashboard from './Dashboard';
-import SignedOut from './SignedOut';
+import Dashboard from '../Dashboard';
+import SignedOutPage from '../SignedOutPage';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuIcon from '@material-ui/icons/Menu'
@@ -17,7 +17,7 @@ import useTheme from '@material-ui/core/styles/useTheme';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import clsx from 'clsx';
-import drawerLogo from '../img/drawer.png';
+import drawerLogo from '../../img/drawer.png';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -26,7 +26,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import HomeIcon from '@material-ui/icons/Home';
 import LiveTvIcon from '@material-ui/icons/LiveTv';
-import MarkdownPlayground from './MarkdownPlayground';
+import MarkdownPlayground from '../MarkdownPlayground';
 import Popper from '@material-ui/core/Popper';
 import Grow from '@material-ui/core/Grow';
 import Paper from '@material-ui/core/Paper';
@@ -37,7 +37,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogActions from '@material-ui/core/DialogActions';
-import { resetSignoutFailure, signOut } from '../redux/actions/auth';
+import { resetSignoutFailure, signOut } from '../../redux/actions/auth';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 const mapsStateToProps = (state: RootState) => {
@@ -130,7 +130,7 @@ const MainPage = connect(mapsStateToProps)((props: MainPageProps) => {
         </DialogActions>
       </Dialog>
       {props.signoutWarn && (
-        <SignedOut />
+        <SignedOutPage />
       )}
       {!props.loggedIn && (
         <Redirect to='/' />

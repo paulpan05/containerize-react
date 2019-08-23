@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Grid from '@material-ui/core/Grid';
-import { loginPageStyles } from '../constants/styles-component';
+import { loginPageStyles } from './constants';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import MuiLink from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import { Link, Redirect } from 'react-router-dom';
-import logo from '../img/logo.png';
-import { LoginPageProps } from '../types/components';
+import logo from '../../img/logo.png';
+import { LoginPageProps } from './types';
 import {
   login,
   loginFailureReset,
@@ -20,10 +20,10 @@ import {
   redirectToSignup,
   signupRequestComplete,
   resetForgotPasswordLoginRedirect
-} from '../redux/actions/auth';
-import { RootState } from '../redux/types/root';
+} from '../../redux/actions/auth';
+import { RootState } from '../../redux/types/root';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import AlertSnackbar from './AlertSnackbar';
+import AlertSnackbar from '../AlertSnackbar';
 
 const mapStateToProps = (state: RootState) => {
   return {

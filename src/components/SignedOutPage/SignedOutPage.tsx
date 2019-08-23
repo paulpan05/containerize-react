@@ -3,9 +3,9 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { connect } from 'react-redux';
-import { SignedOutProps } from '../types/components';
-import { pageloadNotLoggedIn, backToLogin } from '../redux/actions/auth';
-import { signedOutStyles } from '../constants/styles-component';
+import { SignedOutProps } from './types';
+import { pageloadNotLoggedIn, backToLogin } from '../../redux/actions/auth';
+import { signedOutStyles } from './constants';
 
 const SignedOut = connect()((props: SignedOutProps) => {
   const classes = signedOutStyles();

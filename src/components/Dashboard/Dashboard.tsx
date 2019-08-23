@@ -1,5 +1,5 @@
 import React from 'react';
-import { dashboardStyles } from '../constants/styles-component';
+import { dashboardStyles } from './constants';
 import Typography from '@material-ui/core/Typography';
 
 const Dashboard: React.FC = () => {

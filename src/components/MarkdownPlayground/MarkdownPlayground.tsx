@@ -1,8 +1,8 @@
 import React from 'react';
-import { markdownPlaygroundStyles } from '../constants/styles-component';
+import { markdownPlaygroundStyles } from './constants';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
-import MarkdownDisplay from './MarkdownDisplay';
+import MarkdownDisplay from '../MarkdownDisplay';
 import TextField from '@material-ui/core/TextField';
 
 const MarkdownPlayground: React.FC = () => {
