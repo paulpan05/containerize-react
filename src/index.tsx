@@ -6,8 +6,8 @@ import Amplify from 'aws-amplify';
 import './css/index.css';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
-import amplifyConfig from './constants/amplify-config';
-import rootStore from './redux/stores/root-store';
+import { amplifyConfig } from './constants';
+import { rootStore } from './redux/stores';
 import 'github-markdown-css';
 import 'highlight.js/styles/github.css';
 
